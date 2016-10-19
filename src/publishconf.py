@@ -10,11 +10,12 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://groundflyer.github.io'
+SITEURL = 'https://groundflyer.github.io'
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+TRANSLATION_FEED_ATOM = 'feeds/all-%s.atom.xml'
 
 DELETE_OUTPUT_DIRECTORY = True
 

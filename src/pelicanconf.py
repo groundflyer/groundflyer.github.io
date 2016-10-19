@@ -39,6 +39,8 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
+TYPOGRIFY = True
+
 DISPLAY_PAGES_ON_MENU = True
 STATIC_PATHS = ('images', 'misc')
 
@@ -49,7 +51,7 @@ SITETITLE = "Roman Saldygashev"
 SITESUBTITLE = "Graphonium miner"
 SITELOGO = '/images/logo.jpg'
 SITEDESCRIPTION = "CG R&D blog"
-BROWSER_COLOR = '#4285f4'
+# BROWSER_COLOR = '#4285f4'
 COPYRIGHT_YEAR = 2016
 MAIN_MENU = True
 CC_LICENSE = {
