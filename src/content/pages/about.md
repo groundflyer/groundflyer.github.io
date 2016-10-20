@@ -1,7 +1,9 @@
 Title: About
 Date: 2016-10-19
-Modified: 2016-10-19
+Modified: 2016-10-20
 Slug: about
 Lang: en
 
-Hi. My name is Roman Saldygashev. I'm Houdini TD from Russia.
+Hello there. My name is Roman. I'm doing CG by writing shaders and scripts.
+
+I graduated from Tyumen State University in 2013 with degree in Physics.
