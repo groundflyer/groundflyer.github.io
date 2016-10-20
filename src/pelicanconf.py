@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+from datetime import date
 
 AUTHOR = 'Roman Saldygashev'
 SITENAME = "Roman Saldygashev's homepage"
@@ -30,9 +31,15 @@ AUTHOR_FEED_RSS = None
 LINKS = (('PhyShader for Mantra', 'https://github.com/groundflyer/physhader-for-mantra'),)
 
 # Social widget
-SOCIAL = (('vimeo', 'https://vimeo.com/user2461269'),
+SOCIAL = [('vimeo', 'https://vimeo.com/user2461269'),
           ('github', 'https://github.com/groundflyer'),
-          ('envelope', 'mailto:sldg.roman@gmail.com'))
+          ('envelope', 'mailto:sldg.roman@gmail.com'),
+          ('rss', '/feeds/all.atom.xml')]
+
+soc_ru = SOCIAL.copy()
+soc_ru[3] = ('rss', '/feeds/all-ru.atom.xml')
+soc_en = SOCIAL.copy()
+soc_en[3] = ('rss', '/feeds/all-en.atom.xml')
 
 DEFAULT_PAGINATION = 10
 
@@ -52,7 +59,7 @@ SITESUBTITLE = "Graphonium miner"
 SITELOGO = '/images/logo.jpg'
 SITEDESCRIPTION = "CG R&D blog"
 # BROWSER_COLOR = '#4285f4'
-COPYRIGHT_YEAR = 2016
+COPYRIGHT_YEAR = date.today().year
 MAIN_MENU = True
 CC_LICENSE = {
     'name': 'Creative Commons Attribution-ShareAlike',
@@ -77,7 +84,8 @@ I18N_SUBSITES = {
         'SITESUBTITLE': SITESUBTITLE,
         'STATIC_PATHS': STATIC_PATHS,
         'THEME': THEME,
-        'MENUITEMS': MENUITEMS
+        'MENUITEMS': MENUITEMS,
+        'SOCIAL': soc_en,
     },
     'ru': {
         'SITENAME': 'Домашняя страница Салдыгашева Романа',
@@ -85,6 +93,7 @@ I18N_SUBSITES = {
         'SITESUBTITLE': 'Добываю графоний',
         'STATIC_PATHS': STATIC_PATHS,
         'THEME': THEME,
+        'SOCIAL': soc_ru,
         'MENUITEMS': (('English', '/en'),)
     }
 }
