@@ -67,14 +67,14 @@ CC_LICENSE = {
     'slug': 'by-sa'
 }
 ROBOTS = 'index, follow'
-# PYGMENTS_STYLE = 'emacs'
+PYGMENTS_STYLE = 'native'
 MENUITEMS= (('По-русски', '/ru'),)
 
 
 # plugins
 ppp='../../pelican-plugins'
 PLUGIN_PATHS = [ppp, ppp+'/pelican-gist', ppp+'/pelican_vimeo']
-PLUGINS = ['i18n_subsites', 'render_math', 'pelican-cite', 'pelican_gist', 'pelican_vimeo']
+PLUGINS = ['i18n_subsites', 'render_math', 'pelican-cite', 'pelican_gist', 'pelican_vimeo', 'representative_image']
 JINJA_EXTENSIONS = ['jinja2.ext.i18n']
 
 # i18n
