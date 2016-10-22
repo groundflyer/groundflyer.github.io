@@ -74,7 +74,7 @@ MENUITEMS= (('По-русски', '/ru'),)
 # plugins
 ppp='../../pelican-plugins'
 PLUGIN_PATHS = [ppp, ppp+'/pelican-gist', ppp+'/pelican_vimeo']
-PLUGINS = ['i18n_subsites', 'render_math', 'pelican-cite', 'pelican_gist', 'pelican_vimeo', 'representative_image']
+PLUGINS = ['i18n_subsites', 'render_math', 'pelican-cite', 'pelican_gist', 'pelican_vimeo']
 JINJA_EXTENSIONS = ['jinja2.ext.i18n']
 
 # i18n
