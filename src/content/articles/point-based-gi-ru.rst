@@ -9,7 +9,6 @@
 :slug: point-based-gi
 :lang: ru
 :status: published
-:image: images/pbgi.jpg
 :summary:
    Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его принципы.
 
