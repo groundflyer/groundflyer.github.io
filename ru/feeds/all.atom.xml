@@ -165,9 +165,11 @@ phyLightIndirect(int enable = 1;
 &lt;h2&gt;Настройка&amp;nbsp;сцены&lt;/h2&gt;
 &lt;p&gt;Чтобы воспользоваться шейдером, нужно создать Template Light и указать в нём Light&amp;nbsp;Shader.&lt;/p&gt;
 &lt;p&gt;Так как нужно два прохода, создаем две ROPы: одну для запекания, вторую для финального&amp;nbsp;рендера.&lt;/p&gt;
-&lt;p&gt;Для прохода запекания я обычно создаю новый Take и меняю параметр &lt;tt class="docutils literal"&gt;Mode&lt;/tt&gt; лайта на &lt;tt class="docutils literal"&gt;Write&lt;/tt&gt;.
-Затем в созданном Mantra &lt;span class="caps"&gt;ROP&lt;/span&gt; я указываю этот take.
-Запекаем только в микрополигональном режиме, т.к. нам крайне желательна регулярная&amp;nbsp;сетка.&lt;/p&gt;
+&lt;p&gt;Для прохода запекания я обычно создаю новый Take и меняю в нём параметр Mode лайта на Write.
+Затем в bake ROPе я указываю этот тейк.
+Запекаем только в микрополигональном режиме, т.к. нам крайне желательна регулярная сетка.
+Нам не нужна картинка из прохода запекания, так что я выставляю Output Image в /dev/null - это для Linux,
+на Windows это должно быть &lt;span class="caps"&gt;NUL&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;Бьюти пасс можно рендерить уже любым&amp;nbsp;движком.&lt;/p&gt;
 &lt;p&gt;Сохраненное облако точек, кстати, открывается с помощью File &lt;span class="caps"&gt;SOP&lt;/span&gt;. Примерно такой должен получиться&amp;nbsp;результат.&lt;/p&gt;
 &lt;div class="vimeo" align="center"&gt;&lt;iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;
