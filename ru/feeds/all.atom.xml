@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-22T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-22T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Point-based GI in Mantra</title><link href="https://groundflyer.github.io/ru/../en/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-23:ru/../en/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
+&lt;p&gt;This technique seems very similar to the former Renderman &lt;span class="caps"&gt;GI&lt;/span&gt; pipeline [&amp;#64;Christensen10], but here we use point clouds only for irradiance&amp;nbsp;caching.&lt;/p&gt;
+&lt;div class="section" id="light-shader"&gt;
+&lt;h2&gt;Light&amp;nbsp;shader&lt;/h2&gt;
+&lt;p&gt;The shader is based on two&amp;nbsp;passes:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;bake pass:&lt;ol class="arabic"&gt;
+&lt;li&gt;compute&amp;nbsp;irradiance&lt;/li&gt;
+&lt;li&gt;write the computed&amp;nbsp;value&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;beauty pass:&lt;ol class="arabic"&gt;
+&lt;li&gt;read a few closest&amp;nbsp;points&lt;/li&gt;
+&lt;li&gt;filter its&amp;nbsp;values&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;Light shader&amp;nbsp;creation&lt;/dt&gt;
+&lt;dd&gt;In main menu click File -&amp;gt; New Operator Type&amp;#8230;
+Choose &lt;tt class="docutils literal"&gt;Operator Style&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; Type&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Network Type&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;Light Shader Operator&lt;/tt&gt;,
+set name and label. Now in Type Properties window in tab &lt;tt class="docutils literal"&gt;Code&lt;/tt&gt; we can wire code in &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; light context&lt;/a&gt;.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The global illumination computed with &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance"&gt;irradiance()&lt;/a&gt; function and cached into a point cloud file using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="lineno"&gt; 1 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 2 &lt;/span&gt;
+&lt;span class="lineno"&gt; 3 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;Cd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;irradiance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Ps&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="lineno"&gt; 4 &lt;/span&gt;             &lt;span class="s"&gt;&amp;quot;samples&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;samples&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="lineno"&gt; 5 &lt;/span&gt;             &lt;span class="s"&gt;&amp;quot;environment&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;envmap&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="lineno"&gt; 6 &lt;/span&gt;             &lt;span class="s"&gt;&amp;quot;envlight&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;space&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 7 &lt;/span&gt;
+&lt;span class="lineno"&gt; 8 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;wP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ptransform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;space:world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Ps&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 9 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;wN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ntransform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;space:world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;10 &lt;/span&gt;
+&lt;span class="lineno"&gt;11 &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getraylevel&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;getglobalraylevel&lt;/span&gt;&lt;span class="p"&gt;()))&lt;/span&gt;
+&lt;span class="lineno"&gt;12 &lt;/span&gt;     &lt;span class="n"&gt;pcwrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pcfile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;N&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wN&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Cd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Cd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Point position and normal should be transformed into the world space. It&amp;#8217;s obligatory, exception only if you use the same camera for both bake and beauty&amp;nbsp;pass.&lt;/p&gt;
+&lt;p&gt;To avoid stray calls of &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt; we assure that the current shading point is on zero&amp;nbsp;level.&lt;/p&gt;
+&lt;p&gt;Reading and filtering&amp;nbsp;block:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pcfile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxpoints&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;preload&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;Cl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcfilter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Cd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;pcclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;maxpoints&lt;/tt&gt; value is a sample count for&amp;nbsp;filtering.&lt;/p&gt;
+&lt;p&gt;Final&amp;nbsp;code:&lt;/p&gt;
+&lt;p&gt;[gist:id=5be8cf68d58838f7b9ce91164c7d41c4]&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scene-setup"&gt;
+&lt;h2&gt;Scene&amp;nbsp;setup&lt;/h2&gt;
+&lt;p&gt;Create Template Light and set parameter Light Shader to our light shader &lt;span class="caps"&gt;SHOP&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Create two Mantra ROPs: one for bake pass, second for beauty&amp;nbsp;pass.&lt;/p&gt;
+&lt;p&gt;For bake pass create a new Take and add the &lt;tt class="docutils literal"&gt;Mode&lt;/tt&gt; parameter on the light shader to the take, setting value to &lt;tt class="docutils literal"&gt;Write&lt;/tt&gt; accordingly.
+Then specify this take in the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;.
+Use only Micropoly render engine for baking: it generates regular point cloud grid.
+Output Image is useless, so you can set it to &lt;tt class="docutils literal"&gt;/dev/null&lt;/tt&gt; - on Linux, or &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;NUL&lt;/span&gt;&lt;/tt&gt; on&amp;nbsp;Windows.&lt;/p&gt;
+&lt;p&gt;Beauty pass should work fine with any render&amp;nbsp;engine.&lt;/p&gt;
+&lt;p&gt;The saved point cloud is available through File &lt;span class="caps"&gt;SOP&lt;/span&gt;.&lt;/p&gt;
+&lt;div class="vimeo" align="center"&gt;&lt;iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="section" id="optimization"&gt;
+&lt;h2&gt;Optimization&lt;/h2&gt;
+&lt;p&gt;Usually I disable &lt;tt class="docutils literal"&gt;hiding&lt;/tt&gt; on the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;. Resulting point clouds with &lt;tt class="docutils literal"&gt;Uniform Geometry Measuring&lt;/tt&gt; are more regular. To increase/decrease point cloud density change &lt;tt class="docutils literal"&gt;Shading Quality Multiplier&lt;/tt&gt; on the &lt;span class="caps"&gt;ROP&lt;/span&gt; or on&amp;nbsp;objects.&lt;/p&gt;
+&lt;p&gt;To get deeper diffuse bounces shader must be more complicated. &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel"&gt;getglobalraylevel()&lt;/a&gt; and &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate"&gt;renderstate()&lt;/a&gt; functions should useful tom implement this&amp;nbsp;feature.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter"&gt;pcfilter()&lt;/a&gt; function implements weighted arithmetic mean with weights based on distance to a point. I prefer a custom filter routine which takes point normal into&amp;nbsp;account:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^2}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(C\)&lt;/span&gt; - resulted value, &lt;span class="math"&gt;\(N\)&lt;/span&gt; - number of points, &lt;span class="math"&gt;\(C_i\)&lt;/span&gt; -  color value of &lt;span class="math"&gt;\(i\)&lt;/span&gt;theta_i` - angle between shading point and &lt;span class="math"&gt;\(i\)&lt;/span&gt; - distance to the&amp;nbsp;point.&lt;/p&gt;
+&lt;p&gt;It is possible to do all the calculations in a single pass only.
+To implement this you need to generate point cloud at rendertime using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate"&gt;pcgenerate()&lt;/a&gt;, then iterate over points with &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt; setting up position and normal using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt; and finally compute irradiance.
+The filter step remains unchanged.
+This light however will always produce flicker&amp;nbsp;artifacts.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="method-cons"&gt;
+&lt;h2&gt;Method&amp;nbsp;cons&lt;/h2&gt;
+&lt;p&gt;Comparing to modern path tracing this method is a&amp;nbsp;vintage:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;inflexibility&lt;/li&gt;
+&lt;li&gt;two&amp;nbsp;passes&lt;/li&gt;
+&lt;li&gt;wasting io&amp;nbsp;operations&lt;/li&gt;
+&lt;li&gt;potential&amp;nbsp;flickering&lt;/li&gt;
+&lt;li&gt;only diffuse&amp;nbsp;bounces&lt;/li&gt;
+&lt;li&gt;ignoring &lt;span class="caps"&gt;BSDF&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;complicated scene&amp;nbsp;setup&lt;/li&gt;
+&lt;li&gt;one value per point: two-sided materials are not&amp;nbsp;supported&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</summary><category term="mantra"></category><category term="vex"></category></entry><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;.
 Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&amp;nbsp;освещенности.&lt;/p&gt;
 &lt;div class="section" id="id2"&gt;
@@ -19,7 +108,7 @@
 &lt;/ul&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Создание шейдера&amp;nbsp;лайта&lt;/dt&gt;
-&lt;dd&gt;&lt;p class="first"&gt;В главном меню File -&amp;gt; New Operatory Type&amp;#8230;
+&lt;dd&gt;&lt;p class="first"&gt;В главном меню File -&amp;gt; New Operator Type&amp;#8230;
 Выбираем Operator Style - &lt;span class="caps"&gt;VEX&lt;/span&gt; Type, Network Type - Light Shader Operator,
 указываем куда сохранить и вводим названия в соответствующие&amp;nbsp;поля.&lt;/p&gt;
 &lt;p class="last"&gt;Теперь во вкладке Code мы можем писать свой код, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;контекст лайта&lt;/a&gt;.&lt;/p&gt;
@@ -184,11 +273,24 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
 \end{equation*}
 &lt;/div&gt;
 &lt;p&gt;, где &lt;span class="math"&gt;\(C\)&lt;/span&gt; - результат фильтрации, &lt;span class="math"&gt;\(N\)&lt;/span&gt; - количество точек, &lt;span class="math"&gt;\(C_i\)&lt;/span&gt; -  цвет, сохранённый в &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точке, &lt;span class="math"&gt;\(\theta_i\)&lt;/span&gt; - угол между нормалью поверхности и нормалью &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точки, а &lt;span class="math"&gt;\(r\)&lt;/span&gt; - расстояние до&amp;nbsp;неё.&lt;/p&gt;
-&lt;p&gt;Есть еще способ записывать и считывать кеш освещенности только в одном проходе. Это делается с помощью итератора &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt; и &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt;, но он будет всегда фликерить. Мантровский &lt;span class="caps"&gt;SSS&lt;/span&gt; как раз сделан таким&amp;nbsp;способом.&lt;/p&gt;
+&lt;p&gt;Все вычисления описанные выше возможно делать только в одном проходе.
+Для этого нужно сгенерировать облако точек &amp;#8220;на лету&amp;#8221;, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate"&gt;pcgenerate()&lt;/a&gt;, а затем пробежаться по ним с помощью итератора &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt;, задать позицию и нормаль с помощью &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt; и уже затем высчитать в точке освещенность. Сглаживание полученных значений остается неизменным.
+Такой лайт правда будет всегда фликерить.
+Мантровский &lt;span class="caps"&gt;SSS&lt;/span&gt; на точках как раз сделан подобным&amp;nbsp;способом.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id6"&gt;
 &lt;h2&gt;Недостатки&amp;nbsp;метода&lt;/h2&gt;
-&lt;p&gt;У этого метода море недостатков, я даже не буду их перечислять. Хотя&amp;#8230; в тормозной Мантре он может оказаться&amp;nbsp;полезным.&lt;/p&gt;
+&lt;p&gt;По сравнению с современной трассировкой путей у этого метода есть серьезные&amp;nbsp;недостатки:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;костыльность&lt;/li&gt;
+&lt;li&gt;делается в два&amp;nbsp;прохода&lt;/li&gt;
+&lt;li&gt;лишняя запись-чтение с&amp;nbsp;диска&lt;/li&gt;
+&lt;li&gt;учитывает только диффузные&amp;nbsp;отражения&lt;/li&gt;
+&lt;li&gt;потенциальный&amp;nbsp;фликеринг&lt;/li&gt;
+&lt;li&gt;полное игнорирование &lt;span class="caps"&gt;BSDF&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;сложная и не гибкая&amp;nbsp;настройка&lt;/li&gt;
+&lt;li&gt;одна точка - одно значение, с двухсторонними материалами будет&amp;nbsp;отсос&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%&amp;#64;#$&amp;#64;#')) {
     var align = "center",

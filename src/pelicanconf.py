@@ -69,6 +69,7 @@ CC_LICENSE = {
 ROBOTS = 'index, follow'
 PYGMENTS_STYLE = 'native'
 MENUITEMS= (('По-русски', '/ru'),)
+FAVICON = '/images/favicon.ico'
 
 
 # plugins

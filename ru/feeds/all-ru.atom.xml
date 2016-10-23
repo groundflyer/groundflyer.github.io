@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all-ru.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-22T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-22T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all-ru.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;.
 Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&amp;nbsp;освещенности.&lt;/p&gt;
 &lt;div class="section" id="id2"&gt;
@@ -19,7 +19,7 @@
 &lt;/ul&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Создание шейдера&amp;nbsp;лайта&lt;/dt&gt;
-&lt;dd&gt;&lt;p class="first"&gt;В главном меню File -&amp;gt; New Operatory Type&amp;#8230;
+&lt;dd&gt;&lt;p class="first"&gt;В главном меню File -&amp;gt; New Operator Type&amp;#8230;
 Выбираем Operator Style - &lt;span class="caps"&gt;VEX&lt;/span&gt; Type, Network Type - Light Shader Operator,
 указываем куда сохранить и вводим названия в соответствующие&amp;nbsp;поля.&lt;/p&gt;
 &lt;p class="last"&gt;Теперь во вкладке Code мы можем писать свой код, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;контекст лайта&lt;/a&gt;.&lt;/p&gt;
@@ -184,11 +184,24 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
 \end{equation*}
 &lt;/div&gt;
 &lt;p&gt;, где &lt;span class="math"&gt;\(C\)&lt;/span&gt; - результат фильтрации, &lt;span class="math"&gt;\(N\)&lt;/span&gt; - количество точек, &lt;span class="math"&gt;\(C_i\)&lt;/span&gt; -  цвет, сохранённый в &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точке, &lt;span class="math"&gt;\(\theta_i\)&lt;/span&gt; - угол между нормалью поверхности и нормалью &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точки, а &lt;span class="math"&gt;\(r\)&lt;/span&gt; - расстояние до&amp;nbsp;неё.&lt;/p&gt;
-&lt;p&gt;Есть еще способ записывать и считывать кеш освещенности только в одном проходе. Это делается с помощью итератора &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt; и &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt;, но он будет всегда фликерить. Мантровский &lt;span class="caps"&gt;SSS&lt;/span&gt; как раз сделан таким&amp;nbsp;способом.&lt;/p&gt;
+&lt;p&gt;Все вычисления описанные выше возможно делать только в одном проходе.
+Для этого нужно сгенерировать облако точек &amp;#8220;на лету&amp;#8221;, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate"&gt;pcgenerate()&lt;/a&gt;, а затем пробежаться по ним с помощью итератора &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt;, задать позицию и нормаль с помощью &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt; и уже затем высчитать в точке освещенность. Сглаживание полученных значений остается неизменным.
+Такой лайт правда будет всегда фликерить.
+Мантровский &lt;span class="caps"&gt;SSS&lt;/span&gt; на точках как раз сделан подобным&amp;nbsp;способом.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id6"&gt;
 &lt;h2&gt;Недостатки&amp;nbsp;метода&lt;/h2&gt;
-&lt;p&gt;У этого метода море недостатков, я даже не буду их перечислять. Хотя&amp;#8230; в тормозной Мантре он может оказаться&amp;nbsp;полезным.&lt;/p&gt;
+&lt;p&gt;По сравнению с современной трассировкой путей у этого метода есть серьезные&amp;nbsp;недостатки:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;костыльность&lt;/li&gt;
+&lt;li&gt;делается в два&amp;nbsp;прохода&lt;/li&gt;
+&lt;li&gt;лишняя запись-чтение с&amp;nbsp;диска&lt;/li&gt;
+&lt;li&gt;учитывает только диффузные&amp;nbsp;отражения&lt;/li&gt;
+&lt;li&gt;потенциальный&amp;nbsp;фликеринг&lt;/li&gt;
+&lt;li&gt;полное игнорирование &lt;span class="caps"&gt;BSDF&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;сложная и не гибкая&amp;nbsp;настройка&lt;/li&gt;
+&lt;li&gt;одна точка - одно значение, с двухсторонними материалами будет&amp;nbsp;отсос&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%&amp;#64;#$&amp;#64;#')) {
     var align = "center",

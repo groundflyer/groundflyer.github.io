@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/houdini.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;.
-Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&amp;nbsp;освещенности.&lt;/p&gt;
-&lt;div class="section" id="id2"&gt;
-&lt;h2&gt;Шейдер&amp;nbsp;лайта&lt;/h2&gt;
-&lt;p&gt;Алгоритм нашего шейдера предельно&amp;nbsp;прост:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/en/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/houdini.atom.xml" rel="self"></link><id>https://groundflyer.github.io/en/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Point-based GI in Mantra</title><link href="https://groundflyer.github.io/en/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-23:en/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
+&lt;p&gt;This technique seems very similar to the former Renderman &lt;span class="caps"&gt;GI&lt;/span&gt; pipeline &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;, but here we use point clouds only for irradiance&amp;nbsp;caching.&lt;/p&gt;
+&lt;div class="section" id="light-shader"&gt;
+&lt;h2&gt;Light&amp;nbsp;shader&lt;/h2&gt;
+&lt;p&gt;The shader is based on two&amp;nbsp;passes:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;проход запекания:&lt;ol class="arabic"&gt;
-&lt;li&gt;считаем глобалку в текущей&amp;nbsp;точке&lt;/li&gt;
-&lt;li&gt;записываем полученное значение вместе с позицией и нормалью в облако&amp;nbsp;точек&lt;/li&gt;
+&lt;li&gt;bake pass:&lt;ol class="arabic"&gt;
+&lt;li&gt;compute&amp;nbsp;irradiance&lt;/li&gt;
+&lt;li&gt;write the computed&amp;nbsp;value&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
-&lt;li&gt;финальный проход:&lt;ol class="arabic"&gt;
-&lt;li&gt;считываем несколько ближайших&amp;nbsp;точек&lt;/li&gt;
-&lt;li&gt;усредняем&amp;nbsp;(фильтруем)&lt;/li&gt;
+&lt;li&gt;beauty pass:&lt;ol class="arabic"&gt;
+&lt;li&gt;read a few closest&amp;nbsp;points&lt;/li&gt;
+&lt;li&gt;filter its&amp;nbsp;values&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;dl class="docutils"&gt;
-&lt;dt&gt;Создание шейдера&amp;nbsp;лайта&lt;/dt&gt;
-&lt;dd&gt;&lt;p class="first"&gt;В главном меню File -&amp;gt; New Operator Type&amp;#8230;
-Выбираем Operator Style - &lt;span class="caps"&gt;VEX&lt;/span&gt; Type, Network Type - Light Shader Operator,
-указываем куда сохранить и вводим названия в соответствующие&amp;nbsp;поля.&lt;/p&gt;
-&lt;p class="last"&gt;Теперь во вкладке Code мы можем писать свой код, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;контекст лайта&lt;/a&gt;.&lt;/p&gt;
-&lt;/dd&gt;
+&lt;dt&gt;Light shader&amp;nbsp;creation&lt;/dt&gt;
+&lt;dd&gt;In main menu click File -&amp;gt; New Operator Type&amp;#8230;
+Choose &lt;tt class="docutils literal"&gt;Operator Style&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; Type&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Network Type&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;Light Shader Operator&lt;/tt&gt;,
+set name and label. Now in Type Properties window in tab &lt;tt class="docutils literal"&gt;Code&lt;/tt&gt; we can wire code in &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; light context&lt;/a&gt;.&lt;/dd&gt;
 &lt;/dl&gt;
-&lt;p&gt;Глобальное освещение вычисляем с помощью функции &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance"&gt;irradiance()&lt;/a&gt;.
-Далее записываем полученное значение в облако точек с помощью &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;The global illumination computed with &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance"&gt;irradiance()&lt;/a&gt; function and cached into a point cloud file using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="lineno"&gt; 1 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="lineno"&gt; 2 &lt;/span&gt;
 &lt;span class="lineno"&gt; 3 &lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;Cd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;irradiance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Ps&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -40,14 +36,15 @@
 &lt;span class="lineno"&gt;11 &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getraylevel&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;getglobalraylevel&lt;/span&gt;&lt;span class="p"&gt;()))&lt;/span&gt;
 &lt;span class="lineno"&gt;12 &lt;/span&gt;     &lt;span class="n"&gt;pcwrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pcfile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;N&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wN&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Cd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Cd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Здесь мы преобразуем позицию и нормаль в из пространства камеры в пространство мира. Вообще, можно обойтись без этого, но только в случае, если мы будем запекать и рендерить одной и той же&amp;nbsp;камерой.&lt;/p&gt;
-&lt;p&gt;В 11-ой строке производится проверка, что мы используем primary ray, т.е. на нулевой глубине. В противном случае точки могут быть записаны из ненужных нам мест при вызове какой-нибудь рекурсивной функции типа&amp;nbsp;gather().&lt;/p&gt;
-&lt;p&gt;Чтение и сглаживание в финальном проходе осуществляется с помощью &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcopen"&gt;pcopen()&lt;/a&gt; и &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter"&gt;pcfilter()&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;Point position and normal should be transformed into the world space. It&amp;#8217;s obligatory, exception only if you use the same camera for both bake and beauty&amp;nbsp;pass.&lt;/p&gt;
+&lt;p&gt;To avoid stray calls of &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt; we assure that the current shading point is on zero&amp;nbsp;level.&lt;/p&gt;
+&lt;p&gt;Reading and filtering&amp;nbsp;block:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pcfile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;maxpoints&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;preload&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="n"&gt;Cl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcfilter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Cd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="n"&gt;pcclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Исходный код лайта, который должен получиться в&amp;nbsp;конце:&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;maxpoints&lt;/tt&gt; value is a sample count for&amp;nbsp;filtering.&lt;/p&gt;
+&lt;p&gt;Final&amp;nbsp;code:&lt;/p&gt;
 &lt;div class="gist"&gt;
     &lt;script src='https://gist.github.com/5be8cf68d58838f7b9ce91164c7d41c4.js'&gt;&lt;/script&gt;
     &lt;noscript&gt;
@@ -161,46 +158,45 @@ phyLightIndirect(int enable = 1;
     &lt;/noscript&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id4"&gt;
-&lt;h2&gt;Настройка&amp;nbsp;сцены&lt;/h2&gt;
-&lt;p&gt;Чтобы воспользоваться шейдером, нужно создать Template Light и указать в нём Light&amp;nbsp;Shader.&lt;/p&gt;
-&lt;p&gt;Так как нужно два прохода, создаем две ROPы: одну для запекания, вторую для финального&amp;nbsp;рендера.&lt;/p&gt;
-&lt;p&gt;Для прохода запекания я обычно создаю новый Take и меняю в нём параметр Mode лайта на Write.
-Затем в bake ROPе я указываю этот тейк.
-Запекаем только в микрополигональном режиме, т.к. нам крайне желательна регулярная сетка.
-Нам не нужна картинка из прохода запекания, так что я выставляю Output Image в /dev/null - это для Linux,
-на Windows это должно быть &lt;span class="caps"&gt;NUL&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;Бьюти пасс можно рендерить уже любым&amp;nbsp;движком.&lt;/p&gt;
-&lt;p&gt;Сохраненное облако точек, кстати, открывается с помощью File &lt;span class="caps"&gt;SOP&lt;/span&gt;. Примерно такой должен получиться&amp;nbsp;результат.&lt;/p&gt;
+&lt;div class="section" id="scene-setup"&gt;
+&lt;h2&gt;Scene&amp;nbsp;setup&lt;/h2&gt;
+&lt;p&gt;Create Template Light and set parameter Light Shader to our light shader &lt;span class="caps"&gt;SHOP&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Create two Mantra ROPs: one for bake pass, second for beauty&amp;nbsp;pass.&lt;/p&gt;
+&lt;p&gt;For bake pass create a new Take and add the &lt;tt class="docutils literal"&gt;Mode&lt;/tt&gt; parameter on the light shader to the take, setting value to &lt;tt class="docutils literal"&gt;Write&lt;/tt&gt; accordingly.
+Then specify this take in the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;.
+Use only Micropoly render engine for baking: it generates regular point cloud grid.
+Output Image is useless, so you can set it to &lt;tt class="docutils literal"&gt;/dev/null&lt;/tt&gt; - on Linux, or &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;NUL&lt;/span&gt;&lt;/tt&gt; on&amp;nbsp;Windows.&lt;/p&gt;
+&lt;p&gt;Beauty pass should work fine with any render&amp;nbsp;engine.&lt;/p&gt;
+&lt;p&gt;The saved point cloud is available through File &lt;span class="caps"&gt;SOP&lt;/span&gt;.&lt;/p&gt;
 &lt;div class="vimeo" align="center"&gt;&lt;iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;div class="section" id="id5"&gt;
-&lt;h2&gt;Оптимизации&lt;/h2&gt;
-&lt;p&gt;На ROPе bake-прохода также лучше отключить hiding, а во вкладке Dicing параметер Geometry Measuring установить в Uniform Measuring. Чтобы уменьшить/увеличить плотность точек можно покрутить Shading Quality Multiplier как на ROPе, так и на&amp;nbsp;объектах.&lt;/p&gt;
-&lt;p&gt;Чтобы запекать глобалку с более глубоким диффузным отскоком, нужно сделать шейдер хитрее. Используйте для этого &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel"&gt;getglobalraylevel()&lt;/a&gt; чтобы узнать текущую глубину и &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate"&gt;renderstate()&lt;/a&gt; чтобы узнать Diffuse&amp;nbsp;Limit.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter"&gt;pcfilter()&lt;/a&gt; усредняет значение точек, взвешивая их только по расстоянию. Я, например, использую свою функцию для фильтрации, которая также принимает во внимание&amp;nbsp;нормаль:&lt;/p&gt;
+&lt;div class="section" id="optimization"&gt;
+&lt;h2&gt;Optimization&lt;/h2&gt;
+&lt;p&gt;Usually I disable &lt;tt class="docutils literal"&gt;hiding&lt;/tt&gt; on the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;. Resulting point clouds with &lt;tt class="docutils literal"&gt;Uniform Geometry Measuring&lt;/tt&gt; are more regular. To increase/decrease point cloud density change &lt;tt class="docutils literal"&gt;Shading Quality Multiplier&lt;/tt&gt; on the &lt;span class="caps"&gt;ROP&lt;/span&gt; or on&amp;nbsp;objects.&lt;/p&gt;
+&lt;p&gt;To get deeper diffuse bounces shader must be more complicated. &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel"&gt;getglobalraylevel()&lt;/a&gt; and &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate"&gt;renderstate()&lt;/a&gt; functions should useful tom implement this&amp;nbsp;feature.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter"&gt;pcfilter()&lt;/a&gt; function implements weighted arithmetic mean with weights based on distance to a point. I prefer a custom filter routine which takes point normal into&amp;nbsp;account:&lt;/p&gt;
 &lt;div class="math"&gt;
 \begin{equation*}
 C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^2}
 \end{equation*}
 &lt;/div&gt;
-&lt;p&gt;, где &lt;span class="math"&gt;\(C\)&lt;/span&gt; - результат фильтрации, &lt;span class="math"&gt;\(N\)&lt;/span&gt; - количество точек, &lt;span class="math"&gt;\(C_i\)&lt;/span&gt; -  цвет, сохранённый в &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точке, &lt;span class="math"&gt;\(\theta_i\)&lt;/span&gt; - угол между нормалью поверхности и нормалью &lt;span class="math"&gt;\(i\)&lt;/span&gt;-той точки, а &lt;span class="math"&gt;\(r\)&lt;/span&gt; - расстояние до&amp;nbsp;неё.&lt;/p&gt;
-&lt;p&gt;Все вычисления описанные выше возможно делать только в одном проходе.
-Для этого нужно сгенерировать облако точек &amp;#8220;на лету&amp;#8221;, используя &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate"&gt;pcgenerate()&lt;/a&gt;, а затем пробежаться по ним с помощью итератора &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt;, задать позицию и нормаль с помощью &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt; и уже затем высчитать в точке освещенность. Сглаживание полученных значений остается неизменным.
-Такой лайт правда будет всегда фликерить.
-Мантровский &lt;span class="caps"&gt;SSS&lt;/span&gt; на точках как раз сделан подобным&amp;nbsp;способом.&lt;/p&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(C\)&lt;/span&gt; - resulted value, &lt;span class="math"&gt;\(N\)&lt;/span&gt; - number of points, &lt;span class="math"&gt;\(C_i\)&lt;/span&gt; -  color value of &lt;span class="math"&gt;\(i\)&lt;/span&gt;theta_i` - angle between shading point and &lt;span class="math"&gt;\(i\)&lt;/span&gt; - distance to the&amp;nbsp;point.&lt;/p&gt;
+&lt;p&gt;It is possible to do all the calculations in a single pass only.
+To implement this you need to generate point cloud at rendertime using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate"&gt;pcgenerate()&lt;/a&gt;, then iterate over points with &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded"&gt;pcunshaded()&lt;/a&gt; setting up position and normal using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry"&gt;sample_geometry()&lt;/a&gt; and finally compute irradiance.
+The filter step remains unchanged.
+This light however will always produce flicker&amp;nbsp;artifacts.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id6"&gt;
-&lt;h2&gt;Недостатки&amp;nbsp;метода&lt;/h2&gt;
-&lt;p&gt;По сравнению с современной трассировкой путей у этого метода есть серьезные&amp;nbsp;недостатки:&lt;/p&gt;
+&lt;div class="section" id="method-cons"&gt;
+&lt;h2&gt;Method&amp;nbsp;cons&lt;/h2&gt;
+&lt;p&gt;Comparing to modern path tracing this method is a&amp;nbsp;vintage:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;костыльность&lt;/li&gt;
-&lt;li&gt;делается в два&amp;nbsp;прохода&lt;/li&gt;
-&lt;li&gt;лишняя запись-чтение с&amp;nbsp;диска&lt;/li&gt;
-&lt;li&gt;учитывает только диффузные&amp;nbsp;отражения&lt;/li&gt;
-&lt;li&gt;потенциальный&amp;nbsp;фликеринг&lt;/li&gt;
-&lt;li&gt;полное игнорирование &lt;span class="caps"&gt;BSDF&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;сложная и не гибкая&amp;nbsp;настройка&lt;/li&gt;
-&lt;li&gt;одна точка - одно значение, с двухсторонними материалами будет&amp;nbsp;отсос&lt;/li&gt;
+&lt;li&gt;inflexibility&lt;/li&gt;
+&lt;li&gt;two&amp;nbsp;passes&lt;/li&gt;
+&lt;li&gt;wasting io&amp;nbsp;operations&lt;/li&gt;
+&lt;li&gt;potential&amp;nbsp;flickering&lt;/li&gt;
+&lt;li&gt;only diffuse&amp;nbsp;bounces&lt;/li&gt;
+&lt;li&gt;ignoring &lt;span class="caps"&gt;BSDF&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;complicated scene&amp;nbsp;setup&lt;/li&gt;
+&lt;li&gt;one value per point: two-sided materials are not&amp;nbsp;supported&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%&amp;#64;#$&amp;#64;#')) {

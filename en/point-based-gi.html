@@ -1,16 +1,16 @@
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/stylesheet/style.min.css">
+    <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/en/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/pygments/native.min.css">
-  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/en/theme/pygments/native.min.css">
+  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/en/theme/font-awesome/css/font-awesome.min.css">
 
 
-    <link href="https://groundflyer.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Домашняя страница Салдыгашева Романа Atom">
+    <link href="https://groundflyer.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Roman Saldygashev's homepage Atom">
 
 
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
@@ -24,36 +24,36 @@
 
 
 <meta name="author" content="Roman Saldygashev" />
-<meta name="description" content="Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его принципы." />
+<meta name="description" content="This light shader I wrote few years ago just for fun, but it turned out a very useful thing. I’ll briefly explain this shader in the article." />
 <meta name="keywords" content="mantra, vex">
-<meta property="og:site_name" content="Домашняя страница Салдыгашева Романа"/>
-<meta property="og:title" content="Глобалка на пойнт клаудах в Мантре"/>
-<meta property="og:description" content="Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его принципы."/>
+<meta property="og:site_name" content="Roman Saldygashev's homepage"/>
+<meta property="og:title" content="Point-based GI in Mantra"/>
+<meta property="og:description" content="This light shader I wrote few years ago just for fun, but it turned out a very useful thing. I’ll briefly explain this shader in the article."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://groundflyer.github.io/ru/point-based-gi.html"/>
+<meta property="og:url" content="https://groundflyer.github.io/en/point-based-gi.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2016-10-22 00:00:00+05:00"/>
+<meta property="article:published_time" content="2016-10-23 00:00:00+05:00"/>
 <meta property="article:modified_time" content="2016-10-23 00:00:00+05:00"/>
-<meta property="article:author" content="https://groundflyer.github.io/ru/author/roman-saldygashev.html">
+<meta property="article:author" content="https://groundflyer.github.io/en/author/roman-saldygashev.html">
 <meta property="article:section" content="Houdini"/>
 <meta property="article:tag" content="mantra"/>
 <meta property="article:tag" content="vex"/>
 <meta property="og:image" content="/images/logo.png">
 
-  <title>Домашняя страница Салдыгашева Романа &ndash; Глобалка на пойнт клаудах в Мантре</title>
+  <title>Roman Saldygashev's homepage &ndash; Point-based GI in Mantra</title>
 </head>
 <body>
   <aside>
     <div>
-      <a href="https://groundflyer.github.io/ru">
-        <img src="/images/logo.png" alt="Роман Салдыгашев" title="Роман Салдыгашев">
+      <a href="https://groundflyer.github.io/en">
+        <img src="/images/logo.png" alt="Roman Saldygashev" title="Roman Saldygashev">
       </a>
-      <h1><a href="https://groundflyer.github.io/ru">Роман Салдыгашев</a></h1>
+      <h1><a href="https://groundflyer.github.io/en">Roman Saldygashev</a></h1>
 
-<p>Добываю графоний</p>
+<p>Graphonium miner</p>
       <nav>
         <ul class="list">
-          <li><a href="https://groundflyer.github.io/ru/pages/about.html#about">Обо&nbsp;мне</a></li>
+          <li><a href="https://groundflyer.github.io/en/pages/about.html#about">About</a></li>
 
           <li><a href="https://github.com/groundflyer/physhader-for-mantra" target="_blank">PhyShader for Mantra</a></li>
         </ul>
@@ -63,57 +63,53 @@
         <li><a class="sc-vimeo" href="https://vimeo.com/user2461269" target="_blank"><i class="fa fa-vimeo"></i></a></li>
         <li><a class="sc-github" href="https://github.com/groundflyer" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a class="sc-envelope" href="mailto:sldg.roman@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
-        <li><a class="sc-rss" href="feeds/all-ru.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+        <li><a class="sc-rss" href="feeds/all-en.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
       </ul>
     </div>
   </aside>
   <main>
     <nav>
-      <a href="https://groundflyer.github.io/ru">Главная</a>
+      <a href="https://groundflyer.github.io/en">Home</a>
 
-      <a href="/en">English</a>
+      <a href="/ru">По-русски</a>
 
-      <a href="https://groundflyer.github.io/feeds/all.atom.xml">Атом</a>
+      <a href="https://groundflyer.github.io/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
 <article class="single">
   <header>
-    <h1 id="point-based-gi">Глобалка на пойнт клаудах в&nbsp;Мантре</h1>
+    <h1 id="point-based-gi">Point-based <span class="caps">GI</span> in&nbsp;Mantra</h1>
     <p>
-      Опубликовано 22 Октябрь 2016 в <a href="https://groundflyer.github.io/ru/category/houdini.html">Houdini</a>
+      Posted on 2016 Oct 23 in <a href="https://groundflyer.github.io/en/category/houdini.html">Houdini</a>
 
     </p>
   </header>
   <div>
     <img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" />
-<p>Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения <a href='#Christensen10' id='ref-Christensen10-1'>Christensen (2010)</a>.
-Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&nbsp;освещенности.</p>
-<div class="section" id="id2">
-<h2>Шейдер&nbsp;лайта</h2>
-<p>Алгоритм нашего шейдера предельно&nbsp;прост:</p>
+<p>This technique seems very similar to the former Renderman <span class="caps">GI</span> pipeline <a href='#Christensen10' id='ref-Christensen10-1'>Christensen (2010)</a>, but here we use point clouds only for irradiance&nbsp;caching.</p>
+<div class="section" id="light-shader">
+<h2>Light&nbsp;shader</h2>
+<p>The shader is based on two&nbsp;passes:</p>
 <ul class="simple">
-<li>проход запекания:<ol class="arabic">
-<li>считаем глобалку в текущей&nbsp;точке</li>
-<li>записываем полученное значение вместе с позицией и нормалью в облако&nbsp;точек</li>
+<li>bake pass:<ol class="arabic">
+<li>compute&nbsp;irradiance</li>
+<li>write the computed&nbsp;value</li>
 </ol>
 </li>
-<li>финальный проход:<ol class="arabic">
-<li>считываем несколько ближайших&nbsp;точек</li>
-<li>усредняем&nbsp;(фильтруем)</li>
+<li>beauty pass:<ol class="arabic">
+<li>read a few closest&nbsp;points</li>
+<li>filter its&nbsp;values</li>
 </ol>
 </li>
 </ul>
 <dl class="docutils">
-<dt>Создание шейдера&nbsp;лайта</dt>
-<dd><p class="first">В главном меню File -&gt; New Operator Type&#8230;
-Выбираем Operator Style - <span class="caps">VEX</span> Type, Network Type - Light Shader Operator,
-указываем куда сохранить и вводим названия в соответствующие&nbsp;поля.</p>
-<p class="last">Теперь во вкладке Code мы можем писать свой код, используя <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light">контекст лайта</a>.</p>
-</dd>
+<dt>Light shader&nbsp;creation</dt>
+<dd>In main menu click File -&gt; New Operator Type&#8230;
+Choose <tt class="docutils literal">Operator Style</tt> - <tt class="docutils literal"><span class="caps">VEX</span> Type</tt>, <tt class="docutils literal">Network Type</tt> - <tt class="docutils literal">Light Shader Operator</tt>,
+set name and label. Now in Type Properties window in tab <tt class="docutils literal">Code</tt> we can wire code in <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"><span class="caps">VEX</span> light context</a>.</dd>
 </dl>
-<p>Глобальное освещение вычисляем с помощью функции <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance">irradiance()</a>.
-Далее записываем полученное значение в облако точек с помощью <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite">pcwrite()</a>:</p>
+<p>The global illumination computed with <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance">irradiance()</a> function and cached into a point cloud file using <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite">pcwrite()</a>.</p>
 <div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="n">vector</span> <span class="n">n</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
 <span class="lineno"> 2 </span>
 <span class="lineno"> 3 </span><span class="n">vector</span> <span class="n">Cd</span> <span class="o">=</span> <span class="n">irradiance</span><span class="p">(</span><span class="n">Ps</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span>
@@ -127,14 +123,15 @@
 <span class="lineno">11 </span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">getraylevel</span><span class="p">()</span> <span class="o">+</span> <span class="n">getglobalraylevel</span><span class="p">()))</span>
 <span class="lineno">12 </span>     <span class="n">pcwrite</span><span class="p">(</span><span class="n">pcfile</span><span class="p">,</span> <span class="s">&quot;P&quot;</span><span class="p">,</span> <span class="n">wP</span><span class="p">,</span> <span class="s">&quot;N&quot;</span><span class="p">,</span> <span class="n">wN</span><span class="p">,</span> <span class="s">&quot;Cd&quot;</span><span class="p">,</span> <span class="n">Cd</span><span class="p">);</span>
 </pre></div>
-<p>Здесь мы преобразуем позицию и нормаль в из пространства камеры в пространство мира. Вообще, можно обойтись без этого, но только в случае, если мы будем запекать и рендерить одной и той же&nbsp;камерой.</p>
-<p>В 11-ой строке производится проверка, что мы используем primary ray, т.е. на нулевой глубине. В противном случае точки могут быть записаны из ненужных нам мест при вызове какой-нибудь рекурсивной функции типа&nbsp;gather().</p>
-<p>Чтение и сглаживание в финальном проходе осуществляется с помощью <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcopen">pcopen()</a> и <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter">pcfilter()</a>:</p>
+<p>Point position and normal should be transformed into the world space. It&#8217;s obligatory, exception only if you use the same camera for both bake and beauty&nbsp;pass.</p>
+<p>To avoid stray calls of <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite">pcwrite()</a> we assure that the current shading point is on zero&nbsp;level.</p>
+<p>Reading and filtering&nbsp;block:</p>
 <div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">handle</span> <span class="o">=</span> <span class="n">pcopen</span><span class="p">(</span><span class="n">pcfile</span><span class="p">,</span> <span class="s">&quot;P&quot;</span><span class="p">,</span> <span class="n">wP</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">maxpoints</span><span class="p">,</span> <span class="s">&quot;preload&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">Cl</span> <span class="o">=</span> <span class="n">pcfilter</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">&quot;Cd&quot;</span><span class="p">);</span>
 <span class="n">pcclose</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
 </pre></div>
-<p>Исходный код лайта, который должен получиться в&nbsp;конце:</p>
+<p>The <tt class="docutils literal">maxpoints</tt> value is a sample count for&nbsp;filtering.</p>
+<p>Final&nbsp;code:</p>
 <div class="gist">
     <script src='https://gist.github.com/5be8cf68d58838f7b9ce91164c7d41c4.js'></script>
     <noscript>
@@ -248,46 +245,45 @@ phyLightIndirect(int enable = 1;
     </noscript>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>Настройка&nbsp;сцены</h2>
-<p>Чтобы воспользоваться шейдером, нужно создать Template Light и указать в нём Light&nbsp;Shader.</p>
-<p>Так как нужно два прохода, создаем две ROPы: одну для запекания, вторую для финального&nbsp;рендера.</p>
-<p>Для прохода запекания я обычно создаю новый Take и меняю в нём параметр Mode лайта на Write.
-Затем в bake ROPе я указываю этот тейк.
-Запекаем только в микрополигональном режиме, т.к. нам крайне желательна регулярная сетка.
-Нам не нужна картинка из прохода запекания, так что я выставляю Output Image в /dev/null - это для Linux,
-на Windows это должно быть <span class="caps">NUL</span>.</p>
-<p>Бьюти пасс можно рендерить уже любым&nbsp;движком.</p>
-<p>Сохраненное облако точек, кстати, открывается с помощью File <span class="caps">SOP</span>. Примерно такой должен получиться&nbsp;результат.</p>
+<div class="section" id="scene-setup">
+<h2>Scene&nbsp;setup</h2>
+<p>Create Template Light and set parameter Light Shader to our light shader <span class="caps">SHOP</span>.</p>
+<p>Create two Mantra ROPs: one for bake pass, second for beauty&nbsp;pass.</p>
+<p>For bake pass create a new Take and add the <tt class="docutils literal">Mode</tt> parameter on the light shader to the take, setting value to <tt class="docutils literal">Write</tt> accordingly.
+Then specify this take in the bake <span class="caps">ROP</span>.
+Use only Micropoly render engine for baking: it generates regular point cloud grid.
+Output Image is useless, so you can set it to <tt class="docutils literal">/dev/null</tt> - on Linux, or <tt class="docutils literal"><span class="caps">NUL</span></tt> on&nbsp;Windows.</p>
+<p>Beauty pass should work fine with any render&nbsp;engine.</p>
+<p>The saved point cloud is available through File <span class="caps">SOP</span>.</p>
 <div class="vimeo" align="center"><iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"></iframe></div></div>
-<div class="section" id="id5">
-<h2>Оптимизации</h2>
-<p>На ROPе bake-прохода также лучше отключить hiding, а во вкладке Dicing параметер Geometry Measuring установить в Uniform Measuring. Чтобы уменьшить/увеличить плотность точек можно покрутить Shading Quality Multiplier как на ROPе, так и на&nbsp;объектах.</p>
-<p>Чтобы запекать глобалку с более глубоким диффузным отскоком, нужно сделать шейдер хитрее. Используйте для этого <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel">getglobalraylevel()</a> чтобы узнать текущую глубину и <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate">renderstate()</a> чтобы узнать Diffuse&nbsp;Limit.</p>
-<p><a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter">pcfilter()</a> усредняет значение точек, взвешивая их только по расстоянию. Я, например, использую свою функцию для фильтрации, которая также принимает во внимание&nbsp;нормаль:</p>
+<div class="section" id="optimization">
+<h2>Optimization</h2>
+<p>Usually I disable <tt class="docutils literal">hiding</tt> on the bake <span class="caps">ROP</span>. Resulting point clouds with <tt class="docutils literal">Uniform Geometry Measuring</tt> are more regular. To increase/decrease point cloud density change <tt class="docutils literal">Shading Quality Multiplier</tt> on the <span class="caps">ROP</span> or on&nbsp;objects.</p>
+<p>To get deeper diffuse bounces shader must be more complicated. <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel">getglobalraylevel()</a> and <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate">renderstate()</a> functions should useful tom implement this&nbsp;feature.</p>
+<p>The <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter">pcfilter()</a> function implements weighted arithmetic mean with weights based on distance to a point. I prefer a custom filter routine which takes point normal into&nbsp;account:</p>
 <div class="math">
 \begin{equation*}
 C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^2}
 \end{equation*}
 </div>
-<p>, где <span class="math">\(C\)</span> - результат фильтрации, <span class="math">\(N\)</span> - количество точек, <span class="math">\(C_i\)</span> -  цвет, сохранённый в <span class="math">\(i\)</span>-той точке, <span class="math">\(\theta_i\)</span> - угол между нормалью поверхности и нормалью <span class="math">\(i\)</span>-той точки, а <span class="math">\(r\)</span> - расстояние до&nbsp;неё.</p>
-<p>Все вычисления описанные выше возможно делать только в одном проходе.
-Для этого нужно сгенерировать облако точек &#8220;на лету&#8221;, используя <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate">pcgenerate()</a>, а затем пробежаться по ним с помощью итератора <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded">pcunshaded()</a>, задать позицию и нормаль с помощью <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry">sample_geometry()</a> и уже затем высчитать в точке освещенность. Сглаживание полученных значений остается неизменным.
-Такой лайт правда будет всегда фликерить.
-Мантровский <span class="caps">SSS</span> на точках как раз сделан подобным&nbsp;способом.</p>
+<p>where <span class="math">\(C\)</span> - resulted value, <span class="math">\(N\)</span> - number of points, <span class="math">\(C_i\)</span> -  color value of <span class="math">\(i\)</span>theta_i` - angle between shading point and <span class="math">\(i\)</span> - distance to the&nbsp;point.</p>
+<p>It is possible to do all the calculations in a single pass only.
+To implement this you need to generate point cloud at rendertime using <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcgenerate">pcgenerate()</a>, then iterate over points with <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcunshaded">pcunshaded()</a> setting up position and normal using <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/sample_geometry">sample_geometry()</a> and finally compute irradiance.
+The filter step remains unchanged.
+This light however will always produce flicker&nbsp;artifacts.</p>
 </div>
-<div class="section" id="id6">
-<h2>Недостатки&nbsp;метода</h2>
-<p>По сравнению с современной трассировкой путей у этого метода есть серьезные&nbsp;недостатки:</p>
+<div class="section" id="method-cons">
+<h2>Method&nbsp;cons</h2>
+<p>Comparing to modern path tracing this method is a&nbsp;vintage:</p>
 <ol class="arabic simple">
-<li>костыльность</li>
-<li>делается в два&nbsp;прохода</li>
-<li>лишняя запись-чтение с&nbsp;диска</li>
-<li>учитывает только диффузные&nbsp;отражения</li>
-<li>потенциальный&nbsp;фликеринг</li>
-<li>полное игнорирование <span class="caps">BSDF</span></li>
-<li>сложная и не гибкая&nbsp;настройка</li>
-<li>одна точка - одно значение, с двухсторонними материалами будет&nbsp;отсос</li>
+<li>inflexibility</li>
+<li>two&nbsp;passes</li>
+<li>wasting io&nbsp;operations</li>
+<li>potential&nbsp;flickering</li>
+<li>only diffuse&nbsp;bounces</li>
+<li>ignoring <span class="caps">BSDF</span></li>
+<li>complicated scene&nbsp;setup</li>
+<li>one value per point: two-sided materials are not&nbsp;supported</li>
 </ol>
 </div>
 <script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%&#64;#$&#64;#')) {
@@ -356,8 +352,8 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="https://groundflyer.github.io/ru/tag/mantra.html">mantra</a>
-      <a href="https://groundflyer.github.io/ru/tag/vex.html">vex</a>
+      <a href="https://groundflyer.github.io/en/tag/mantra.html">mantra</a>
+      <a href="https://groundflyer.github.io/en/tag/vex.html">vex</a>
     </p>
   </div>
 
@@ -373,7 +369,7 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
     })();
 </script>
 <noscript>
-    Пожалуйста включите JavaScript, чтобы просмотреть комментарии.
+    Please enable JavaScript to view comments.
 </noscript>
 </article>
 
@@ -381,7 +377,7 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
 <p>
   &copy; Roman Saldygashev 2016 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
-<p>Создано с помощью <a href="http://getpelican.com" target="_blank">Pelican</a> - оформление <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> от <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p><p>
+<p>Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
      target="_blank">
@@ -403,8 +399,8 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Домашняя страница Салдыгашева Романа ",
-  "url" : "https://groundflyer.github.io/ru",
+  "name": " Roman Saldygashev's homepage ",
+  "url" : "https://groundflyer.github.io/en",
   "image": "/images/logo.png",
   "description": "CG R&D blog"
 }
