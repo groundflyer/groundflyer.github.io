@@ -63,8 +63,8 @@
         <li><a class="sc-vimeo" href="https://vimeo.com/user2461269" target="_blank"><i class="fa fa-vimeo"></i></a></li>
         <li><a class="sc-github" href="https://github.com/groundflyer" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a class="sc-envelope" href="mailto:sldg.roman@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+        <li><a class="sc-facebook" href="https://www.facebook.com/profile.php?id=100008549179428" target="_blank"><i class="fa fa-facebook"></i></a></li>
         <li><a class="sc-rss" href="feeds/all-en.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
-        <li><a class="sc-rss" href="/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
       </ul>
     </div>
   </aside>
@@ -107,7 +107,7 @@
 <dl class="docutils">
 <dt>Light shader&nbsp;creation</dt>
 <dd>In main menu click File -&gt; New Operator Type&#8230;
-Choose <tt class="docutils literal">Operator Style</tt> - <tt class="docutils literal"><span class="caps">VEX</span> Type</tt>, <tt class="docutils literal">Network Type</tt> - <tt class="docutils literal">Light Shader Operator</tt>,
+Choose <strong>Operator Style</strong> - <strong><span class="caps">VEX</span> Type</strong>, <strong>Network Type</strong> - <strong>Light Shader Operator</strong>,
 set name and label. Now in Type Properties window in tab <tt class="docutils literal">Code</tt> we can wire code in <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"><span class="caps">VEX</span> light context</a>.</dd>
 </dl>
 <p>The global illumination computed with <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance">irradiance()</a> function and cached into a point cloud file using <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite">pcwrite()</a>.</p>
@@ -250,7 +250,7 @@ phyLightIndirect(int enable = 1;
 <h2>Scene&nbsp;setup</h2>
 <p>Create Template Light and set parameter Light Shader to our light shader <span class="caps">SHOP</span>.</p>
 <p>Create two Mantra ROPs: one for bake pass, second for beauty&nbsp;pass.</p>
-<p>For bake pass create a new Take and add the <tt class="docutils literal">Mode</tt> parameter on the light shader to the take, setting value to <tt class="docutils literal">Write</tt> accordingly.
+<p>For bake pass create a new Take and add the <strong>Mode</strong> parameter on the light shader to the take, setting value to <strong>Write</strong> accordingly.
 Then specify this take in the bake <span class="caps">ROP</span>.
 Use only Micropoly render engine for baking: it generates regular point cloud grid.
 Output Image is useless, so you can set it to <tt class="docutils literal">/dev/null</tt> - on Linux, or <tt class="docutils literal"><span class="caps">NUL</span></tt> on&nbsp;Windows.</p>
@@ -259,7 +259,7 @@ Output Image is useless, so you can set it to <tt class="docutils literal">/dev/
 <div class="vimeo" align="center"><iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"></iframe></div></div>
 <div class="section" id="optimization">
 <h2>Optimization</h2>
-<p>Usually I disable <tt class="docutils literal">hiding</tt> on the bake <span class="caps">ROP</span>. Resulting point clouds with <tt class="docutils literal">Uniform Geometry Measuring</tt> are more regular. To increase/decrease point cloud density change <tt class="docutils literal">Shading Quality Multiplier</tt> on the <span class="caps">ROP</span> or on&nbsp;objects.</p>
+<p>Usually I disable hiding on the bake <span class="caps">ROP</span>. Resulting point clouds with Uniform Geometry Measuring are more regular. To increase/decrease point cloud density change Shading Quality Multiplier on the <span class="caps">ROP</span> or on&nbsp;objects.</p>
 <p>To get deeper diffuse bounces shader must be more complicated. <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel">getglobalraylevel()</a> and <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate">renderstate()</a> functions should useful tom implement this&nbsp;feature.</p>
 <p>The <a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter">pcfilter()</a> function implements weighted arithmetic mean with weights based on distance to a point. I prefer a custom filter routine which takes point normal into&nbsp;account:</p>
 <div class="math">

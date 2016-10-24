@@ -34,12 +34,12 @@ The ``sky_source`` emits *rain* particles.
 Hitting the water surface each *rain* particle emits one *drop* particle via POP Replicate.
 These *drop* particles we'll use in the shader as a point cloud to generate ripples.
 
-As we need hit info, the parameter ``Add Hit Attributes`` must be enabled in POP Solver.
+As we need hit info, the parameter **Add Hit Attributes** must be enabled in POP Solver.
 
 *Drops* should stay steady exactly at the hit positions:
-``Shape`` parameter on POP Replicate should be set to ``Point`` and there are must be no forces affecting *drops*.
+**Shape** parameter on POP Replicate should be set to **Point** and there are must be no forces affecting *drops*.
 
-Keep Life Expectancy as low as possible: it reduces point cloud weight and improves render performance.
+Keep **Life Expectancy** as low as possible: it reduces point cloud weight and improves render performance.
 
 The ``justborn`` group we can use to emit spray particles.
 
@@ -128,6 +128,6 @@ The shader can be improved next ways:
   but as far as the value of Life Expectancy is known,
   it's possible to compute accurate arbitrary attenuation using Ramp.
 
-* Lookup radius also can be calculated accurately using velocity and Life Expectance values instead of empirical fitting.
+* Lookup radius also can be calculated accurately using velocity and Life Expectancy values instead of empirical fitting.
 
 * Wave combination should be done simulating interference. Probably it requires complex numbers support.

@@ -7,10 +7,10 @@
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;sky_source&lt;/tt&gt; emits &lt;em&gt;rain&lt;/em&gt; particles.
 Hitting the water surface each &lt;em&gt;rain&lt;/em&gt; particle emits one &lt;em&gt;drop&lt;/em&gt; particle via &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate.
 These &lt;em&gt;drop&lt;/em&gt; particles we&amp;#8217;ll use in the shader as a point cloud to generate&amp;nbsp;ripples.&lt;/p&gt;
-&lt;p&gt;As we need hit info, the parameter &lt;tt class="docutils literal"&gt;Add Hit Attributes&lt;/tt&gt; must be enabled in &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;Solver.&lt;/p&gt;
+&lt;p&gt;As we need hit info, the parameter &lt;strong&gt;Add Hit Attributes&lt;/strong&gt; must be enabled in &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;Solver.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Drops&lt;/em&gt; should stay steady exactly at the hit positions:
-&lt;tt class="docutils literal"&gt;Shape&lt;/tt&gt; parameter on &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate should be set to &lt;tt class="docutils literal"&gt;Point&lt;/tt&gt; and there are must be no forces affecting &lt;em&gt;drops&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Keep Life Expectancy as low as possible: it reduces point cloud weight and improves render&amp;nbsp;performance.&lt;/p&gt;
+&lt;strong&gt;Shape&lt;/strong&gt; parameter on &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate should be set to &lt;strong&gt;Point&lt;/strong&gt; and there are must be no forces affecting &lt;em&gt;drops&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Keep &lt;strong&gt;Life Expectancy&lt;/strong&gt; as low as possible: it reduces point cloud weight and improves render&amp;nbsp;performance.&lt;/p&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;justborn&lt;/tt&gt; group we can use to emit spray&amp;nbsp;particles.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="the-shader"&gt;
@@ -78,7 +78,7 @@ Then we pass &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="d
 &lt;li&gt;I use inverse square attenuation,
 but as far as the value of Life Expectancy is known,
 it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp;Ramp.&lt;/li&gt;
-&lt;li&gt;Lookup radius also can be calculated accurately using velocity and Life Expectance values instead of empirical&amp;nbsp;fitting.&lt;/li&gt;
+&lt;li&gt;Lookup radius also can be calculated accurately using velocity and Life Expectancy values instead of empirical&amp;nbsp;fitting.&lt;/li&gt;
 &lt;li&gt;Wave combination should be done simulating interference. Probably it requires complex numbers&amp;nbsp;support.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -158,7 +158,7 @@ it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Light shader&amp;nbsp;creation&lt;/dt&gt;
 &lt;dd&gt;In main menu click File -&amp;gt; New Operator Type&amp;#8230;
-Choose &lt;tt class="docutils literal"&gt;Operator Style&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; Type&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Network Type&lt;/tt&gt; - &lt;tt class="docutils literal"&gt;Light Shader Operator&lt;/tt&gt;,
+Choose &lt;strong&gt;Operator Style&lt;/strong&gt; - &lt;strong&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; Type&lt;/strong&gt;, &lt;strong&gt;Network Type&lt;/strong&gt; - &lt;strong&gt;Light Shader Operator&lt;/strong&gt;,
 set name and label. Now in Type Properties window in tab &lt;tt class="docutils literal"&gt;Code&lt;/tt&gt; we can wire code in &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/contexts/light"&gt;&lt;span class="caps"&gt;VEX&lt;/span&gt; light context&lt;/a&gt;.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;The global illumination computed with &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/irradiance"&gt;irradiance()&lt;/a&gt; function and cached into a point cloud file using &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcwrite"&gt;pcwrite()&lt;/a&gt;.&lt;/p&gt;
@@ -301,7 +301,7 @@ phyLightIndirect(int enable = 1;
 &lt;h2&gt;Scene&amp;nbsp;setup&lt;/h2&gt;
 &lt;p&gt;Create Template Light and set parameter Light Shader to our light shader &lt;span class="caps"&gt;SHOP&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;Create two Mantra ROPs: one for bake pass, second for beauty&amp;nbsp;pass.&lt;/p&gt;
-&lt;p&gt;For bake pass create a new Take and add the &lt;tt class="docutils literal"&gt;Mode&lt;/tt&gt; parameter on the light shader to the take, setting value to &lt;tt class="docutils literal"&gt;Write&lt;/tt&gt; accordingly.
+&lt;p&gt;For bake pass create a new Take and add the &lt;strong&gt;Mode&lt;/strong&gt; parameter on the light shader to the take, setting value to &lt;strong&gt;Write&lt;/strong&gt; accordingly.
 Then specify this take in the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;.
 Use only Micropoly render engine for baking: it generates regular point cloud grid.
 Output Image is useless, so you can set it to &lt;tt class="docutils literal"&gt;/dev/null&lt;/tt&gt; - on Linux, or &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;NUL&lt;/span&gt;&lt;/tt&gt; on&amp;nbsp;Windows.&lt;/p&gt;
@@ -310,7 +310,7 @@ Output Image is useless, so you can set it to &lt;tt class="docutils literal"&gt
 &lt;div class="vimeo" align="center"&gt;&lt;iframe width="800" height="450" src="https://player.vimeo.com/video/187550386" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div class="section" id="optimization"&gt;
 &lt;h2&gt;Optimization&lt;/h2&gt;
-&lt;p&gt;Usually I disable &lt;tt class="docutils literal"&gt;hiding&lt;/tt&gt; on the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;. Resulting point clouds with &lt;tt class="docutils literal"&gt;Uniform Geometry Measuring&lt;/tt&gt; are more regular. To increase/decrease point cloud density change &lt;tt class="docutils literal"&gt;Shading Quality Multiplier&lt;/tt&gt; on the &lt;span class="caps"&gt;ROP&lt;/span&gt; or on&amp;nbsp;objects.&lt;/p&gt;
+&lt;p&gt;Usually I disable hiding on the bake &lt;span class="caps"&gt;ROP&lt;/span&gt;. Resulting point clouds with Uniform Geometry Measuring are more regular. To increase/decrease point cloud density change Shading Quality Multiplier on the &lt;span class="caps"&gt;ROP&lt;/span&gt; or on&amp;nbsp;objects.&lt;/p&gt;
 &lt;p&gt;To get deeper diffuse bounces shader must be more complicated. &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/getglobalraylevel"&gt;getglobalraylevel()&lt;/a&gt; and &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/renderstate"&gt;renderstate()&lt;/a&gt; functions should useful tom implement this&amp;nbsp;feature.&lt;/p&gt;
 &lt;p&gt;The &lt;a class="reference external" href="http://www.sidefx.com/docs/houdini15.5/vex/functions/pcfilter"&gt;pcfilter()&lt;/a&gt; function implements weighted arithmetic mean with weights based on distance to a point. I prefer a custom filter routine which takes point normal into&amp;nbsp;account:&lt;/p&gt;
 &lt;div class="math"&gt;

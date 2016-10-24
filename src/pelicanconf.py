@@ -39,9 +39,9 @@ SOCIAL = [('vimeo', 'https://vimeo.com/user2461269'),
           ('rss', '/feeds/all.atom.xml')]
 
 soc_ru = SOCIAL.copy()
-soc_ru[3] = ('rss', 'feeds/all-ru.atom.xml')
+soc_ru[-1] = ('rss', 'feeds/all-ru.atom.xml')
 soc_en = SOCIAL.copy()
-soc_en[3] = ('rss', 'feeds/all-en.atom.xml')
+soc_en[-1] = ('rss', 'feeds/all-en.atom.xml')
 
 DEFAULT_PAGINATION = 10
 

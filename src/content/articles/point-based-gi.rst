@@ -44,7 +44,7 @@ The shader is based on two passes:
 
 Light shader creation
 	In main menu click File -> New Operator Type...
-	Choose ``Operator Style`` - ``VEX Type``, ``Network Type`` - ``Light Shader Operator``,
+	Choose **Operator Style** - **VEX Type**, **Network Type** - **Light Shader Operator**,
 	set name and label. Now in Type Properties window in tab ``Code`` we can wire code in `VEX light context`__.
 
 __ http://www.sidefx.com/docs/houdini15.5/vex/contexts/light
@@ -92,7 +92,7 @@ Create Template Light and set parameter Light Shader to our light shader SHOP.
 
 Create two Mantra ROPs: one for bake pass, second for beauty pass.
 
-For bake pass create a new Take and add the ``Mode`` parameter on the light shader to the take, setting value to ``Write`` accordingly.
+For bake pass create a new Take and add the **Mode** parameter on the light shader to the take, setting value to **Write** accordingly.
 Then specify this take in the bake ROP.
 Use only Micropoly render engine for baking: it generates regular point cloud grid.
 Output Image is useless, so you can set it to ``/dev/null`` - on Linux, or ``NUL`` on Windows.
@@ -109,7 +109,7 @@ The saved point cloud is available through File SOP.
 Optimization
 ============
 
-Usually I disable ``hiding`` on the bake ROP. Resulting point clouds with ``Uniform Geometry Measuring`` are more regular. To increase/decrease point cloud density change ``Shading Quality Multiplier`` on the ROP or on objects.
+Usually I disable hiding on the bake ROP. Resulting point clouds with Uniform Geometry Measuring are more regular. To increase/decrease point cloud density change Shading Quality Multiplier on the ROP or on objects.
 
 To get deeper diffuse bounces shader must be more complicated. `getglobalraylevel()`_ and `renderstate()`_ functions should useful tom implement this feature.
 

@@ -63,8 +63,8 @@
         <li><a class="sc-vimeo" href="https://vimeo.com/user2461269" target="_blank"><i class="fa fa-vimeo"></i></a></li>
         <li><a class="sc-github" href="https://github.com/groundflyer" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a class="sc-envelope" href="mailto:sldg.roman@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+        <li><a class="sc-facebook" href="https://www.facebook.com/profile.php?id=100008549179428" target="_blank"><i class="fa fa-facebook"></i></a></li>
         <li><a class="sc-rss" href="feeds/all-en.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
-        <li><a class="sc-rss" href="/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
       </ul>
     </div>
   </aside>
@@ -95,10 +95,10 @@
 <p>The <tt class="docutils literal">sky_source</tt> emits <em>rain</em> particles.
 Hitting the water surface each <em>rain</em> particle emits one <em>drop</em> particle via <span class="caps">POP</span> Replicate.
 These <em>drop</em> particles we&#8217;ll use in the shader as a point cloud to generate&nbsp;ripples.</p>
-<p>As we need hit info, the parameter <tt class="docutils literal">Add Hit Attributes</tt> must be enabled in <span class="caps">POP</span>&nbsp;Solver.</p>
+<p>As we need hit info, the parameter <strong>Add Hit Attributes</strong> must be enabled in <span class="caps">POP</span>&nbsp;Solver.</p>
 <p><em>Drops</em> should stay steady exactly at the hit positions:
-<tt class="docutils literal">Shape</tt> parameter on <span class="caps">POP</span> Replicate should be set to <tt class="docutils literal">Point</tt> and there are must be no forces affecting <em>drops</em>.</p>
-<p>Keep Life Expectancy as low as possible: it reduces point cloud weight and improves render&nbsp;performance.</p>
+<strong>Shape</strong> parameter on <span class="caps">POP</span> Replicate should be set to <strong>Point</strong> and there are must be no forces affecting <em>drops</em>.</p>
+<p>Keep <strong>Life Expectancy</strong> as low as possible: it reduces point cloud weight and improves render&nbsp;performance.</p>
 <p>The <tt class="docutils literal">justborn</tt> group we can use to emit spray&nbsp;particles.</p>
 </div>
 <div class="section" id="the-shader">
@@ -166,7 +166,7 @@ Then we pass <tt class="docutils literal">x</tt> and <tt class="docutils literal
 <li>I use inverse square attenuation,
 but as far as the value of Life Expectancy is known,
 it&#8217;s possible to compute accurate arbitrary attenuation using&nbsp;Ramp.</li>
-<li>Lookup radius also can be calculated accurately using velocity and Life Expectance values instead of empirical&nbsp;fitting.</li>
+<li>Lookup radius also can be calculated accurately using velocity and Life Expectancy values instead of empirical&nbsp;fitting.</li>
 <li>Wave combination should be done simulating interference. Probably it requires complex numbers&nbsp;support.</li>
 </ul>
 </div>
