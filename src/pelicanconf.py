@@ -34,6 +34,8 @@ LINKS = (('PhyShader for Mantra', 'https://github.com/groundflyer/physhader-for-
 SOCIAL = [('vimeo', 'https://vimeo.com/user2461269'),
           ('github', 'https://github.com/groundflyer'),
           ('envelope', 'mailto:sldg.roman@gmail.com'),
+          ('facebook', 'https://www.facebook.com/profile.php?id=100008549179428'),
+          # ('vk', 'https://vk.com/id17026354'),
           ('rss', '/feeds/all.atom.xml')]
 
 soc_ru = SOCIAL.copy()
@@ -67,7 +69,7 @@ CC_LICENSE = {
     'slug': 'by-sa'
 }
 ROBOTS = 'index, follow'
-PYGMENTS_STYLE = 'native'
+PYGMENTS_STYLE = 'default'
 MENUITEMS= (('По-русски', '/ru'),)
 FAVICON = '/images/favicon.ico'
 

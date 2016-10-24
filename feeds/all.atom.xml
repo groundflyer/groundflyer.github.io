@@ -1,5 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Point-based GI in Mantra</title><link href="https://groundflyer.github.io/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-23:point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-10-24T00:00:00+05:00</updated><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/point-based-ripple.html" rel="alternate"></link><updated>2016-10-24T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
+&lt;div class="section" id="generating-drops-point-cloud"&gt;
+&lt;h2&gt;Generating drops&amp;nbsp;point-cloud&lt;/h2&gt;
+&lt;p&gt;Exemplary &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;setup:&lt;/p&gt;
+&lt;img alt="" class="align-center" src="images/pb-ripple-dop.png" /&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;sky_source&lt;/tt&gt; emits &lt;em&gt;rain&lt;/em&gt; particles.
+Hitting the water surface each &lt;em&gt;rain&lt;/em&gt; particle emits one &lt;em&gt;drop&lt;/em&gt; particle via &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate.
+These &lt;em&gt;drop&lt;/em&gt; particles we&amp;#8217;ll use in the shader as a point cloud to generate&amp;nbsp;ripples.&lt;/p&gt;
+&lt;p&gt;As we need hit info, the parameter &lt;tt class="docutils literal"&gt;Add Hit Attributes&lt;/tt&gt; must be enabled in &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;Solver.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Drops&lt;/em&gt; should stay steady exactly at the hit positions:
+&lt;tt class="docutils literal"&gt;Shape&lt;/tt&gt; parameter on &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate should be set to &lt;tt class="docutils literal"&gt;Point&lt;/tt&gt; and there are must be no forces affecting &lt;em&gt;drops&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Keep Life Expectancy as low as possible: it reduces point cloud weight and improves render&amp;nbsp;performance.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;justborn&lt;/tt&gt; group we can use to emit spray&amp;nbsp;particles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-shader"&gt;
+&lt;h2&gt;The&amp;nbsp;shader&lt;/h2&gt;
+&lt;p&gt;I define the shape of wave using Gauss&amp;nbsp;distribution:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+f(x) = e^{\frac{-x^2}{\sigma^2}}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;, where &lt;span class="math"&gt;\(x\)&lt;/span&gt; is wave position, &lt;span class="math"&gt;\(\sigma\)&lt;/span&gt; is wave&amp;nbsp;width.&lt;/p&gt;
+&lt;object class="align-center" data="images/gauss.svg" type="image/svg+xml"&gt;
+&lt;/object&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="nf"&gt;gauss&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Iterating over &lt;em&gt;drops&lt;/em&gt; particles saved to &lt;tt class="docutils literal"&gt;dropsfile&lt;/tt&gt;, we compute wave position using time &lt;tt class="docutils literal"&gt;age&lt;/tt&gt; and speed &lt;tt class="docutils literal"&gt;vel&lt;/tt&gt;.
+Then we pass &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;width&lt;/tt&gt; to gauss() function computing the wave&amp;nbsp;intensity.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;ripples&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+           &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;faloff&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+           &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;dropsfile&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+     &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dropsfile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+     &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;eval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+     &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pciterate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+     &lt;span class="p"&gt;{&lt;/span&gt;
+         &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;rval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pcimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;point.distance&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+         &lt;span class="n"&gt;rval&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;=&lt;/span&gt; &lt;span class="n"&gt;pcimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;age&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rval&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+             &lt;span class="p"&gt;{&lt;/span&gt;
+                 &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;vel&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                 &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;wave&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gauss&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                 &lt;span class="n"&gt;wave&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;faloff&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                 &lt;span class="n"&gt;eval&lt;/span&gt; &lt;span class="o"&gt;*=&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;wave&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+             &lt;span class="p"&gt;}&lt;/span&gt;
+     &lt;span class="p"&gt;}&lt;/span&gt;
+
+     &lt;span class="n"&gt;pcclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+     &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There are few naive ways to combine waves, but they have&amp;nbsp;defects:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;multiplication: zero result&amp;nbsp;always&lt;/li&gt;
+&lt;li&gt;summation: rapid increasing of height on wave&amp;nbsp;crossings&lt;/li&gt;
+&lt;li&gt;maximum: hard creases of crossing&amp;nbsp;waves&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So I use inverted multiplication of inverted waves. It produces much reliable&amp;nbsp;results.&lt;/p&gt;
+&lt;p&gt;I square intensity at the end to soften&amp;nbsp;waves.&lt;/p&gt;
+&lt;p&gt;Adjusting the &lt;tt class="docutils literal"&gt;radius&lt;/tt&gt; parameter can help to improve shader&amp;nbsp;performance.&lt;/p&gt;
+&lt;p&gt;Wrap the code above to &lt;span class="caps"&gt;VEX&lt;/span&gt; Builder Operator Type and&amp;nbsp;enjoy.&lt;/p&gt;
+&lt;div class="vimeo" align="center"&gt;&lt;iframe width="800" height="450" src="https://player.vimeo.com/video/187616133" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class="section" id="further-improvements"&gt;
+&lt;h2&gt;Further&amp;nbsp;improvements&lt;/h2&gt;
+&lt;p&gt;The shader can be improved next&amp;nbsp;ways:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;I use inverse square attenuation,
+but as far as the value of Life Expectancy is known,
+it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp;Ramp.&lt;/li&gt;
+&lt;li&gt;Lookup radius also can be calculated accurately using velocity and Life Expectance values instead of empirical&amp;nbsp;fitting.&lt;/li&gt;
+&lt;li&gt;Wave combination should be done simulating interference. Probably it requires complex numbers&amp;nbsp;support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="mantra"></category><category term="vex"></category></entry><entry><title>Point-based GI in Mantra</title><link href="https://groundflyer.github.io/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-23:point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;p&gt;This technique seems very similar to the former Renderman &lt;span class="caps"&gt;GI&lt;/span&gt; pipeline &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;, but here we use point clouds only for irradiance&amp;nbsp;caching.&lt;/p&gt;
 &lt;div class="section" id="light-shader"&gt;
 &lt;h2&gt;Light&amp;nbsp;shader&lt;/h2&gt;
