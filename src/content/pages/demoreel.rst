@@ -24,7 +24,7 @@ __ http://melnitsa.com/
 
    Developed point-based volume multiple scattering shader and automatizing tool to improve volume appearance without huge rendertime cost. (VEX, Python)
 
-   Also developed various procedural assets and shaders.
+   Also developed various procedural assets and procedural shaders such as gridless advection CVEX volume procedural, point-based trail shader, etc.
 
 __ https://vimeo.com/158047361
 __ https://vimeo.com/159545342
