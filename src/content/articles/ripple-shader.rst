@@ -130,4 +130,4 @@ The shader can be improved next ways:
 
 * Lookup radius also can be calculated accurately using velocity and Life Expectancy values instead of empirical fitting.
 
-* Wave combination should be done simulating interference. Probably it requires complex numbers support.
+* Waves combination should be done simulating interference. Probably it requires complex numbers support.

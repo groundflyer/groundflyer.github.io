@@ -58,7 +58,7 @@ THEME = "../../pelican-themes/Flex"
 # Flex config
 SITETITLE = "Roman Saldygashev"
 SITESUBTITLE = "Graphonium miner"
-SITELOGO = '/images/logo.png'
+SITELOGO = '/images/photo.jpg'
 SITEDESCRIPTION = "CG R&D blog"
 # BROWSER_COLOR = '#4285f4'
 COPYRIGHT_YEAR = date.today().year

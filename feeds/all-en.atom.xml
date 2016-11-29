@@ -79,7 +79,7 @@ Then we pass &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="d
 but as far as the value of Life Expectancy is known,
 it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp;Ramp.&lt;/li&gt;
 &lt;li&gt;Lookup radius also can be calculated accurately using velocity and Life Expectancy values instead of empirical&amp;nbsp;fitting.&lt;/li&gt;
-&lt;li&gt;Wave combination should be done simulating interference. Probably it requires complex numbers&amp;nbsp;support.&lt;/li&gt;
+&lt;li&gt;Waves combination should be done simulating interference. Probably it requires complex numbers&amp;nbsp;support.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
