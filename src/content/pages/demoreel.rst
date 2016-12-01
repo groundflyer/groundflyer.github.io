@@ -14,15 +14,15 @@ Demoreel
 
 1. Fireflies (test scene)
 
-   Particle-based flocking system developed for `Oorfene Deuce and his Wooden Soldiers (2017)`__, `Melnitsa Animation`__.
+   Developed fireflies flocking system. Studio `Melnitsa Animation`__; project `Oorfene Deuce and his Wooden Soldiers (2017)`__.
    Houdini POP's, VEX.
 
-__ http://www.imdb.com/title/tt4685636/
 __ http://melnitsa.com/
+__ http://www.imdb.com/title/tt4685636/
 
 2. Personal project (`link`__, `makingof`__)
 
-   Developed point-based volume multiple scattering shader and automatizing tool to improve volume appearance without huge rendertime cost. (VEX, Python)
+   To improve volume appearance at low rendertime cost developed point-based volume multiple scattering shader and tool automatizing cache generation. (VEX, Python)
 
    Also developed various procedural assets and procedural shaders such as gridless advection CVEX volume procedural, point-based trail shader, etc.
 
@@ -45,7 +45,7 @@ __ https://github.com/groundflyer/physhader-for-mantra
 
 5. 3D Game of Life R'n'D
 
-   Cellular automata implemented in VEX
+   Cellular automata simulation implemented in VEX
 
 6. Point-based ripple shader (`link`__)
 
