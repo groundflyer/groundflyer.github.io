@@ -33,7 +33,7 @@
 <meta property="og:url" content="https://groundflyer.github.io/en/point-based-ripple.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2016-10-24 00:00:00+05:00"/>
-<meta property="article:modified_time" content="2016-10-24 00:00:00+05:00"/>
+<meta property="article:modified_time" content="2016-12-01 00:00:00+05:00"/>
 <meta property="article:author" content="https://groundflyer.github.io/en/author/roman-saldygashev.html">
 <meta property="article:section" content="Houdini"/>
 <meta property="article:tag" content="mantra"/>
@@ -99,12 +99,13 @@ These <em>drop</em> particles we&#8217;ll use in the shader as a point cloud to 
 <p>As we need hit info, the parameter <strong>Add Hit Attributes</strong> must be enabled in <span class="caps">POP</span>&nbsp;Solver.</p>
 <p><em>Drops</em> should stay steady exactly at the hit positions:
 <strong>Shape</strong> parameter on <span class="caps">POP</span> Replicate should be set to <strong>Point</strong> and there are must be no forces affecting <em>drops</em>.</p>
-<p>Keep <strong>Life Expectancy</strong> as low as possible: it reduces point cloud weight and improves render&nbsp;performance.</p>
-<p>The <tt class="docutils literal">justborn</tt> group we can use to emit spray&nbsp;particles.</p>
+<p>Tip:
+Keep <strong>Life Expectancy</strong> as low as possible (1-2 seconds): it reduces point cloud size and improves render&nbsp;performance.</p>
+<p>The <tt class="docutils literal">justborn</tt> group we can use to emit spray particles, we don&#8217;t need it for ripple&nbsp;generation.</p>
 </div>
 <div class="section" id="the-shader">
 <h2>The&nbsp;shader</h2>
-<p>I define the shape of wave using Gauss&nbsp;distribution:</p>
+<p>I define the shape of wave using Gaussian&nbsp;distribution:</p>
 <div class="math">
 \begin{equation*}
 f(x) = e^{\frac{-x^2}{\sigma^2}}
@@ -118,7 +119,7 @@ f(x) = e^{\frac{-x^2}{\sigma^2}}
     <span class="k">return</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">sigma</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
-<p>Iterating over <em>drops</em> particles saved to <tt class="docutils literal">dropsfile</tt>, we compute wave position using time <tt class="docutils literal">age</tt> and speed <tt class="docutils literal">vel</tt>.
+<p>Iterating over <em>drops</em> particles stored in <tt class="docutils literal">dropsfile</tt>, we compute wave position using time <tt class="docutils literal">age</tt> and speed <tt class="docutils literal">vel</tt>.
 Then we pass <tt class="docutils literal">x</tt> and <tt class="docutils literal">width</tt> to gauss() function computing the wave&nbsp;intensity.</p>
 <div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">ripples</span><span class="p">(</span><span class="n">vector</span> <span class="n">p</span><span class="p">;</span>
            <span class="kt">float</span> <span class="n">width</span><span class="p">,</span> <span class="n">vel</span><span class="p">,</span> <span class="n">faloff</span><span class="p">,</span> <span class="n">radius</span><span class="p">;</span>

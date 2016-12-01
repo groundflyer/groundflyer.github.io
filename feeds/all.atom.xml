@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-10-24T00:00:00+05:00</updated><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/point-based-ripple.html" rel="alternate"></link><updated>2016-10-24T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-12-01T00:00:00+05:00</updated><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/point-based-ripple.html" rel="alternate"></link><updated>2016-12-01T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;div class="section" id="generating-drops-point-cloud"&gt;
 &lt;h2&gt;Generating drops&amp;nbsp;point-cloud&lt;/h2&gt;
 &lt;p&gt;Exemplary &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;setup:&lt;/p&gt;
@@ -10,12 +10,13 @@ These &lt;em&gt;drop&lt;/em&gt; particles we&amp;#8217;ll use in the shader as a
 &lt;p&gt;As we need hit info, the parameter &lt;strong&gt;Add Hit Attributes&lt;/strong&gt; must be enabled in &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;Solver.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Drops&lt;/em&gt; should stay steady exactly at the hit positions:
 &lt;strong&gt;Shape&lt;/strong&gt; parameter on &lt;span class="caps"&gt;POP&lt;/span&gt; Replicate should be set to &lt;strong&gt;Point&lt;/strong&gt; and there are must be no forces affecting &lt;em&gt;drops&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Keep &lt;strong&gt;Life Expectancy&lt;/strong&gt; as low as possible: it reduces point cloud weight and improves render&amp;nbsp;performance.&lt;/p&gt;
-&lt;p&gt;The &lt;tt class="docutils literal"&gt;justborn&lt;/tt&gt; group we can use to emit spray&amp;nbsp;particles.&lt;/p&gt;
+&lt;p&gt;Tip:
+Keep &lt;strong&gt;Life Expectancy&lt;/strong&gt; as low as possible (1-2 seconds): it reduces point cloud size and improves render&amp;nbsp;performance.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;justborn&lt;/tt&gt; group we can use to emit spray particles, we don&amp;#8217;t need it for ripple&amp;nbsp;generation.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="the-shader"&gt;
 &lt;h2&gt;The&amp;nbsp;shader&lt;/h2&gt;
-&lt;p&gt;I define the shape of wave using Gauss&amp;nbsp;distribution:&lt;/p&gt;
+&lt;p&gt;I define the shape of wave using Gaussian&amp;nbsp;distribution:&lt;/p&gt;
 &lt;div class="math"&gt;
 \begin{equation*}
 f(x) = e^{\frac{-x^2}{\sigma^2}}
@@ -29,7 +30,7 @@ f(x) = e^{\frac{-x^2}{\sigma^2}}
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;sigma&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Iterating over &lt;em&gt;drops&lt;/em&gt; particles saved to &lt;tt class="docutils literal"&gt;dropsfile&lt;/tt&gt;, we compute wave position using time &lt;tt class="docutils literal"&gt;age&lt;/tt&gt; and speed &lt;tt class="docutils literal"&gt;vel&lt;/tt&gt;.
+&lt;p&gt;Iterating over &lt;em&gt;drops&lt;/em&gt; particles stored in &lt;tt class="docutils literal"&gt;dropsfile&lt;/tt&gt;, we compute wave position using time &lt;tt class="docutils literal"&gt;age&lt;/tt&gt; and speed &lt;tt class="docutils literal"&gt;vel&lt;/tt&gt;.
 Then we pass &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;width&lt;/tt&gt; to gauss() function computing the wave&amp;nbsp;intensity.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;ripples&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
            &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;faloff&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;

@@ -3,7 +3,7 @@ Point-based ripple shader
 =========================
 
 :date: 2016-10-24
-:modified: 2016-10-24
+:modified: 2016-12-1
 :category: Houdini
 :tags: mantra, vex
 :slug: point-based-ripple
@@ -39,14 +39,15 @@ As we need hit info, the parameter **Add Hit Attributes** must be enabled in POP
 *Drops* should stay steady exactly at the hit positions:
 **Shape** parameter on POP Replicate should be set to **Point** and there are must be no forces affecting *drops*.
 
-Keep **Life Expectancy** as low as possible: it reduces point cloud weight and improves render performance.
+Tip:
+Keep **Life Expectancy** as low as possible (1-2 seconds): it reduces point cloud size and improves render performance.
 
-The ``justborn`` group we can use to emit spray particles.
+The ``justborn`` group we can use to emit spray particles, we don't need it for ripple generation.
 
 The shader
 ==========
 
-I define the shape of wave using Gauss distribution:
+I define the shape of wave using Gaussian distribution:
 
 .. math::
    
@@ -64,7 +65,7 @@ I define the shape of wave using Gauss distribution:
        return exp(-x*x/(sigma*sigma));
    }
 
-Iterating over *drops* particles saved to ``dropsfile``, we compute wave position using time ``age`` and speed ``vel``.
+Iterating over *drops* particles stored in ``dropsfile``, we compute wave position using time ``age`` and speed ``vel``.
 Then we pass ``x`` and ``width`` to gauss() function computing the wave intensity.
 
 .. code-block:: c
