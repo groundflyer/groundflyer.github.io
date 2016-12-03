@@ -1,5 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/houdini.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-12-01T00:00:00+05:00</updated><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/point-based-ripple.html" rel="alternate"></link><updated>2016-12-01T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/houdini.atom.xml" rel="self"></link><id>https://groundflyer.github.io/</id><updated>2016-12-03T00:00:00+05:00</updated><entry><title>Tinyfarm</title><link href="https://groundflyer.github.io/tinyfarm.html" rel="alternate"></link><updated>2016-12-03T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-12-03:tinyfarm.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/tinyfarm.jpg" style="width: 800px; height: 450px;" /&gt;
+&lt;p&gt;Just run this script in the directory containing &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;#8217;s to render them&amp;nbsp;all.&lt;/p&gt;
+&lt;p&gt;To stop rendering simply Ctrl-C the process,
+it will wait for the current render job to finish,
+then it cleans up the &lt;span class="caps"&gt;IFD&lt;/span&gt; and exits.
+If you have no time to wait,
+do Ctrl-C again - this cancels the current job by killing Mantra&amp;nbsp;process.&lt;/p&gt;
+&lt;p&gt;The script also prints out some useful info with Mantra-like timestamp:
+the name of the file being rendered, finished render status,
+elapsed and estimated&amp;nbsp;time.&lt;/p&gt;
+&lt;p&gt;There are just a few optional parameters, run script with -h flag to see&amp;nbsp;them:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;directory where to look for &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;nbsp;files&lt;/li&gt;
+&lt;li&gt;-k: disables removing of files which where rendered without&amp;nbsp;errors&lt;/li&gt;
+&lt;li&gt;-m: add Mantra command-line option after this&amp;nbsp;flag&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The script&amp;nbsp;itself:&lt;/p&gt;
+&lt;div class="gist"&gt;
+    &lt;script src='https://gist.github.com/35809025716bd91d37f9b431056db7c8.js'&gt;&lt;/script&gt;
+    &lt;noscript&gt;
+        &lt;pre&gt;&lt;code&gt;#!/bin/bash
+#: Title	: Mantra batcher
+#: Date		: 10.08.2016
+#: Modified	: 12.03.2016
+#: Author	: Saldygashev Roman &lt;sldg.roman@gmail.com&gt;
+#: Version	: 0.15
+#: Description	: Run Mantra renderer for multiple ifd files
+#: Options	: see tinyfarm.bash -h
+#: License	: WTFPL
+
+# primary default subpath: pwd/SUBPATH
+SUBPATH=render/ifds
+
+# keep successfully rendered file
+KEEP=0
+
+showhelp() {
+    echo "Usage: $0 [DIR] [-h] [-k] [-m ARGS]"
+    echo "Runs mantra for ifds in current directory/$SUBPATH, or in current directory, or in DIR, or in DIR/$SUBPATH"
+    echo "Options:"
+    echo -e "\t-h\tshow help and exit"
+    echo -e "\t-k\tkeep files - do not remove after successful render"
+    echo -e "\t-m ARGS\tMantra arguments. See mantra -h"
+}
+
+declare DIR=`pwd`	# directory for ifds
+declare -a MPARMS
+
+for i in $(seq 1 $#); do
+    key=${!i}
+
+    case $key in
+	-k)
+	    KEEP=1
+	    ;;
+	-m)
+	    m=$((i+1))
+	    MPARMS=${@: m}
+	    break
+	    ;;
+	-h)
+	    showhelp
+	    exit 0
+	    ;;
+	*)
+	    if [[ -d $key ]]; then
+		DIR=$key
+	    else
+		echo "Unknown option $key"
+		exit 1
+	    fi
+	    ;;
+    esac
+done
+
+declare -i QUIT=0		# quit handler
+declare -i EXC=0		# exit code
+
+RED='\033[31;1m'
+GREEN='\033[32;1m'
+YELLOW='\033[33;1m'
+RESET='\033[0m'
+
+# Mantra-like timestamp
+timestamp () {
+    date +"[%T]"
+}
+
+justmessage () {
+    echo `timestamp` $@
+}
+
+warning () {
+    echo -e ${YELLOW}`timestamp` $@${RESET}
+}
+
+failure () {
+    echo -e ${RED}`timestamp` $@${RESET}
+}
+
+success () {
+    echo -e ${GREEN}`timestamp` $@${RESET}
+}
+
+PreTrap() {
+    warning "Interrupted by user" $((QUIT+1)) "times"
+    EXC=1
+    ((QUIT++))
+    if [ $QUIT -gt 1 ]; then
+	warning "Canselling current render with PID" $MPID
+	kill $MPID
+	exit $EXC
+    fi
+}
+
+PostTrap() {
+    # uncomment the next line, if you want to prevent double/triple interruption
+    # while kill -0 $MPID &gt;&amp; /dev/null; do wait $MPID; echo "waiting"; done
+
+    if [ $QUIT -eq 1 ]; then
+	justmessage "Waiting for render to finish..."
+	wait $MPID
+	RSTATUS=$?
+	CleanUp
+    	exit $EXC
+    else
+	CleanUp
+    fi
+}
+
+# if the exit code is zero (exit normally) then remove file
+CleanUp () {
+    ((IFDNUM--))
+
+    if [ $RSTATUS -eq 0 ]; then
+	success "Render successful."
+	if [ $KEEP -eq 0 ]; then
+	    warning "Removing" ${ifd}
+	    rm $ifd
+	fi
+    else
+	failure "Render failed."
+	EXC=2
+    fi
+
+    local elt=`get_elapsed_time`
+    justmessage "Elapsed time:" `convert_time $elt`
+}
+
+get_current_time () {
+    date -u +"%s"
+}
+
+get_elapsed_time () {
+    local -i ct=`get_current_time`
+    echo $((ct-STIME))
+}
+
+convert_time() {
+    date -u --date="@$1" +"%T"
+}
+
+estimate_time () {
+    local -i fed=$((${#ifds[@]}-IFDNUM)) # number of rendered files
+    local -i spf=0		# seconds per file
+    local -i eld=`get_elapsed_time`
+    if [ $eld != 0 ]; then
+	spf=$((eld/fed))
+	local -i es=$((spf*IFDNUM))		   # estimated seconds
+	echo `convert_time $es`
+    else
+	echo "N/A"
+    fi
+}
+
+searchpath=${DIR}
+
+# find the folder containing ifds
+if ! ls ${DIR}/*.ifd* 1&gt; /dev/null 2&gt;&amp;1; then
+    if [ -d ${DIR}/${SUBPATH} ]; then
+	if ! ls ${DIR}/${SUBPATH}/*.ifd* 1&gt; /dev/null 2&gt;&amp;1; then
+	    echo "There is nothing to render in $DIR/$SUBPATH"
+	    showhelp
+	    exit 1
+	else
+	    searchpath=${DIR}/${SUBPATH}
+	fi
+    else
+	echo "There is nothing to render in $DIR"
+	showhelp
+	exit 1
+    fi
+fi
+
+echo "Searchpath is" ${searchpath}
+ifds=(${searchpath}/*.ifd*) 	# create list of files
+ifds=${ifds[@]/*\**/}		# remove wildcard elements
+
+
+declare -i IFDNUM=${#ifds[@]}	# number of files
+declare -ir STIME=`get_current_time` # start time
+
+trap PreTrap SIGINT SIGTERM SIGTSTP
+
+for ifd in ${ifds[@]}; do
+    if [[ -r $ifd ]]; then
+	justmessage $IFDNUM "files to render."
+	justmessage "Estimated time:" `estimate_time`
+	justmessage "Rendering " ${ifd}
+	RSTATUS=1
+	mantra ${MPARMS[*]} -F ${ifd} &amp;
+	MPID=$!			# get mantra pid
+	wait $MPID		# wait mantra to finish in current loop
+	RSTATUS=$?		# get mantra exit status
+
+	PostTrap
+    fi
+done
+
+exit $EXC&lt;/code&gt;&lt;/pre&gt;
+    &lt;/noscript&gt;
+&lt;/div&gt;
+</summary><category term="mantra"></category><category term="linux"></category><category term="bash"></category></entry><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/point-based-ripple.html" rel="alternate"></link><updated>2016-12-01T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;div class="section" id="generating-drops-point-cloud"&gt;
 &lt;h2&gt;Generating drops&amp;nbsp;point-cloud&lt;/h2&gt;
 &lt;p&gt;Exemplary &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;setup:&lt;/p&gt;

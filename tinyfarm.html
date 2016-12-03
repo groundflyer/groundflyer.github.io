@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/theme/pygments/default.min.css">
+  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://groundflyer.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Roman Saldygashev's homepage Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+
+<meta name="author" content="Roman Saldygashev" />
+<meta name="description" content="Sometimes Houdini consumes too much RAM when sending a scene to render so Mantra goes to swap and slows down badly. In such cases it’s better to generate IFD’s and render them separately from shell, when Houdini is closed and RAM is free more or less. I written this shell script to render multiple IFD files in convenient way." />
+<meta name="keywords" content="mantra, linux, bash">
+<meta property="og:site_name" content="Roman Saldygashev's homepage"/>
+<meta property="og:title" content="Tinyfarm"/>
+<meta property="og:description" content="Sometimes Houdini consumes too much RAM when sending a scene to render so Mantra goes to swap and slows down badly. In such cases it’s better to generate IFD’s and render them separately from shell, when Houdini is closed and RAM is free more or less. I written this shell script to render multiple IFD files in convenient way."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://groundflyer.github.io/tinyfarm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-12-03 00:00:00+05:00"/>
+<meta property="article:modified_time" content="2016-12-03 00:00:00+05:00"/>
+<meta property="article:author" content="https://groundflyer.github.io/author/roman-saldygashev.html">
+<meta property="article:section" content="Houdini"/>
+<meta property="article:tag" content="mantra"/>
+<meta property="article:tag" content="linux"/>
+<meta property="article:tag" content="bash"/>
+<meta property="og:image" content="/images/photo.jpg">
+
+  <title>Roman Saldygashev's homepage &ndash; Tinyfarm</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://groundflyer.github.io">
+        <img src="/images/photo.jpg" alt="Roman Saldygashev" title="Roman Saldygashev">
+      </a>
+      <h1><a href="https://groundflyer.github.io">Roman Saldygashev</a></h1>
+
+<p>Graphonium miner</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://groundflyer.github.io/pages/about.html#about">About</a></li>
+          <li><a href="https://groundflyer.github.io/pages/demoreel.html#demoreel">Demoreel</a></li>
+
+          <li><a href="https://github.com/groundflyer/physhader-for-mantra" target="_blank">PhyShader for Mantra</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-vimeo" href="https://vimeo.com/user2461269" target="_blank"><i class="fa fa-vimeo"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/groundflyer" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-envelope" href="mailto:sldg.roman@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+        <li><a class="sc-facebook" href="https://www.facebook.com/profile.php?id=100008549179428" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <a href="https://groundflyer.github.io">Home</a>
+
+      <a href="/ru">По-русски</a>
+
+      <a href="https://groundflyer.github.io/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="tinyfarm">Tinyfarm</h1>
+    <p>
+      Posted on 2016 Dec 03 in <a href="https://groundflyer.github.io/category/houdini.html">Houdini</a>
+
+    </p>
+  </header>
+  <div>
+    <img alt="" class="align-center" src="images/tinyfarm.jpg" style="width: 800px; height: 450px;" />
+<p>Just run this script in the directory containing <span class="caps">IFD</span>&#8217;s to render them&nbsp;all.</p>
+<p>To stop rendering simply Ctrl-C the process,
+it will wait for the current render job to finish,
+then it cleans up the <span class="caps">IFD</span> and exits.
+If you have no time to wait,
+do Ctrl-C again - this cancels the current job by killing Mantra&nbsp;process.</p>
+<p>The script also prints out some useful info with Mantra-like timestamp:
+the name of the file being rendered, finished render status,
+elapsed and estimated&nbsp;time.</p>
+<p>There are just a few optional parameters, run script with -h flag to see&nbsp;them:</p>
+<ul class="simple">
+<li>directory where to look for <span class="caps">IFD</span>&nbsp;files</li>
+<li>-k: disables removing of files which where rendered without&nbsp;errors</li>
+<li>-m: add Mantra command-line option after this&nbsp;flag</li>
+</ul>
+<p>The script&nbsp;itself:</p>
+<div class="gist">
+    <script src='https://gist.github.com/35809025716bd91d37f9b431056db7c8.js'></script>
+    <noscript>
+        <pre><code>#!/bin/bash
+#: Title	: Mantra batcher
+#: Date		: 10.08.2016
+#: Modified	: 12.03.2016
+#: Author	: Saldygashev Roman <sldg.roman@gmail.com>
+#: Version	: 0.15
+#: Description	: Run Mantra renderer for multiple ifd files
+#: Options	: see tinyfarm.bash -h
+#: License	: WTFPL
+
+# primary default subpath: pwd/SUBPATH
+SUBPATH=render/ifds
+
+# keep successfully rendered file
+KEEP=0
+
+showhelp() {
+    echo "Usage: $0 [DIR] [-h] [-k] [-m ARGS]"
+    echo "Runs mantra for ifds in current directory/$SUBPATH, or in current directory, or in DIR, or in DIR/$SUBPATH"
+    echo "Options:"
+    echo -e "\t-h\tshow help and exit"
+    echo -e "\t-k\tkeep files - do not remove after successful render"
+    echo -e "\t-m ARGS\tMantra arguments. See mantra -h"
+}
+
+declare DIR=`pwd`	# directory for ifds
+declare -a MPARMS
+
+for i in $(seq 1 $#); do
+    key=${!i}
+
+    case $key in
+	-k)
+	    KEEP=1
+	    ;;
+	-m)
+	    m=$((i+1))
+	    MPARMS=${@: m}
+	    break
+	    ;;
+	-h)
+	    showhelp
+	    exit 0
+	    ;;
+	*)
+	    if [[ -d $key ]]; then
+		DIR=$key
+	    else
+		echo "Unknown option $key"
+		exit 1
+	    fi
+	    ;;
+    esac
+done
+
+declare -i QUIT=0		# quit handler
+declare -i EXC=0		# exit code
+
+RED='\033[31;1m'
+GREEN='\033[32;1m'
+YELLOW='\033[33;1m'
+RESET='\033[0m'
+
+# Mantra-like timestamp
+timestamp () {
+    date +"[%T]"
+}
+
+justmessage () {
+    echo `timestamp` $@
+}
+
+warning () {
+    echo -e ${YELLOW}`timestamp` $@${RESET}
+}
+
+failure () {
+    echo -e ${RED}`timestamp` $@${RESET}
+}
+
+success () {
+    echo -e ${GREEN}`timestamp` $@${RESET}
+}
+
+PreTrap() {
+    warning "Interrupted by user" $((QUIT+1)) "times"
+    EXC=1
+    ((QUIT++))
+    if [ $QUIT -gt 1 ]; then
+	warning "Canselling current render with PID" $MPID
+	kill $MPID
+	exit $EXC
+    fi
+}
+
+PostTrap() {
+    # uncomment the next line, if you want to prevent double/triple interruption
+    # while kill -0 $MPID >& /dev/null; do wait $MPID; echo "waiting"; done
+
+    if [ $QUIT -eq 1 ]; then
+	justmessage "Waiting for render to finish..."
+	wait $MPID
+	RSTATUS=$?
+	CleanUp
+    	exit $EXC
+    else
+	CleanUp
+    fi
+}
+
+# if the exit code is zero (exit normally) then remove file
+CleanUp () {
+    ((IFDNUM--))
+
+    if [ $RSTATUS -eq 0 ]; then
+	success "Render successful."
+	if [ $KEEP -eq 0 ]; then
+	    warning "Removing" ${ifd}
+	    rm $ifd
+	fi
+    else
+	failure "Render failed."
+	EXC=2
+    fi
+
+    local elt=`get_elapsed_time`
+    justmessage "Elapsed time:" `convert_time $elt`
+}
+
+get_current_time () {
+    date -u +"%s"
+}
+
+get_elapsed_time () {
+    local -i ct=`get_current_time`
+    echo $((ct-STIME))
+}
+
+convert_time() {
+    date -u --date="@$1" +"%T"
+}
+
+estimate_time () {
+    local -i fed=$((${#ifds[@]}-IFDNUM)) # number of rendered files
+    local -i spf=0		# seconds per file
+    local -i eld=`get_elapsed_time`
+    if [ $eld != 0 ]; then
+	spf=$((eld/fed))
+	local -i es=$((spf*IFDNUM))		   # estimated seconds
+	echo `convert_time $es`
+    else
+	echo "N/A"
+    fi
+}
+
+searchpath=${DIR}
+
+# find the folder containing ifds
+if ! ls ${DIR}/*.ifd* 1> /dev/null 2>&1; then
+    if [ -d ${DIR}/${SUBPATH} ]; then
+	if ! ls ${DIR}/${SUBPATH}/*.ifd* 1> /dev/null 2>&1; then
+	    echo "There is nothing to render in $DIR/$SUBPATH"
+	    showhelp
+	    exit 1
+	else
+	    searchpath=${DIR}/${SUBPATH}
+	fi
+    else
+	echo "There is nothing to render in $DIR"
+	showhelp
+	exit 1
+    fi
+fi
+
+echo "Searchpath is" ${searchpath}
+ifds=(${searchpath}/*.ifd*) 	# create list of files
+ifds=${ifds[@]/*\**/}		# remove wildcard elements
+
+
+declare -i IFDNUM=${#ifds[@]}	# number of files
+declare -ir STIME=`get_current_time` # start time
+
+trap PreTrap SIGINT SIGTERM SIGTSTP
+
+for ifd in ${ifds[@]}; do
+    if [[ -r $ifd ]]; then
+	justmessage $IFDNUM "files to render."
+	justmessage "Estimated time:" `estimate_time`
+	justmessage "Rendering " ${ifd}
+	RSTATUS=1
+	mantra ${MPARMS[*]} -F ${ifd} &
+	MPID=$!			# get mantra pid
+	wait $MPID		# wait mantra to finish in current loop
+	RSTATUS=$?		# get mantra exit status
+
+	PostTrap
+    fi
+done
+
+exit $EXC</code></pre>
+    </noscript>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://groundflyer.github.io/tag/mantra.html">mantra</a>
+      <a href="https://groundflyer.github.io/tag/linux.html">linux</a>
+      <a href="https://groundflyer.github.io/tag/bash.html">bash</a>
+    </p>
+  </div>
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'groundflyer';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+</article>
+
+    <footer>
+<p>
+  &copy; Roman Saldygashev 2016 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Roman Saldygashev's homepage ",
+  "url" : "https://groundflyer.github.io",
+  "image": "/images/photo.jpg",
+  "description": "CG R&D blog"
+}
+</script>
+</body>
+</html>
