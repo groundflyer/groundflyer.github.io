@@ -3,7 +3,7 @@ Tinyfarm
 ========
 
 :date: 2016-12-03
-:modified: 2016-12-03
+:modified: 2016-12-04
 :category: Houdini
 :tags: mantra, linux, bash
 :slug: tinyfarm
@@ -12,7 +12,7 @@ Tinyfarm
    Sometimes Houdini consumes too much RAM when sending a scene to render
    so Mantra goes to swap and slows down badly.
    
-   In such cases it's better to generate IFD's and render them separately from shell, when Houdini is closed and RAM is free more or less.
+   In such cases it's better to generate IFD's and render them separately, when Houdini is closed and RAM is mostly free.
 
    I written this shell script to render multiple IFD files in convenient way.
 
