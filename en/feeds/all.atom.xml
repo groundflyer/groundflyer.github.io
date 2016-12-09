@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/en/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/en/</id><updated>2016-12-04T00:00:00+05:00</updated><entry><title>Tinyfarm</title><link href="https://groundflyer.github.io/en/tinyfarm.html" rel="alternate"></link><updated>2016-12-04T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-12-03:en/tinyfarm.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/tinyfarm.jpg" style="width: 800px; height: 450px;" /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/en/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/en/</id><updated>2016-12-09T00:00:00+05:00</updated><entry><title>Tinyfarm</title><link href="https://groundflyer.github.io/en/tinyfarm.html" rel="alternate"></link><updated>2016-12-09T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-12-03:en/tinyfarm.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/tinyfarm.jpg" style="width: 800px; height: 450px;" /&gt;
 &lt;p&gt;Just run this script in the directory containing &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;#8217;s to render them&amp;nbsp;all.&lt;/p&gt;
 &lt;p&gt;To stop rendering simply Ctrl-C the process,
 it will wait for the current render job to finish,
@@ -12,9 +12,16 @@ elapsed and estimated&amp;nbsp;time.&lt;/p&gt;
 &lt;p&gt;There are just a few optional parameters, run script with -h flag to see&amp;nbsp;them:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;directory where to look for &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;nbsp;files&lt;/li&gt;
-&lt;li&gt;-k: disables removing of files which where rendered without&amp;nbsp;errors&lt;/li&gt;
-&lt;li&gt;-m: add Mantra command-line option after this&amp;nbsp;flag&lt;/li&gt;
+&lt;li&gt;-k: do not remove an &lt;span class="caps"&gt;IFD&lt;/span&gt; after successful&amp;nbsp;render&lt;/li&gt;
+&lt;li&gt;-m: send additional options to mantra; see mantra&amp;nbsp;-h&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tinyfarm.bash /path/to/cool/project -m -V 1a
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;starts rendering in &lt;cite&gt;/path/to/cool/project&lt;/cite&gt; with level 1 rendering statistics and verbose Alfred-style progress&amp;nbsp;reporting.&lt;/p&gt;
+&lt;p&gt;The directory you specified is not the only place where script is looking for IFDs, but in the &lt;strong&gt;&lt;span class="caps"&gt;SUBPATH&lt;/span&gt;&lt;/strong&gt; too.
+I usually save IFDs to &lt;cite&gt;$&lt;span class="caps"&gt;HIP&lt;/span&gt;/render/ifds&lt;/cite&gt;.
+Redefine the &lt;strong&gt;&lt;span class="caps"&gt;SUBPATH&lt;/span&gt;&lt;/strong&gt; variable if you use other directory for&amp;nbsp;IFDs.&lt;/p&gt;
 &lt;p&gt;The script&amp;nbsp;itself:&lt;/p&gt;
 &lt;div class="gist"&gt;
     &lt;script src='https://gist.github.com/35809025716bd91d37f9b431056db7c8.js'&gt;&lt;/script&gt;

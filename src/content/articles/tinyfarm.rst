@@ -3,7 +3,7 @@ Tinyfarm
 ========
 
 :date: 2016-12-03
-:modified: 2016-12-04
+:modified: 2016-12-09
 :category: Houdini
 :tags: mantra, linux, bash
 :slug: tinyfarm
@@ -42,9 +42,21 @@ There are just a few optional parameters, run script with -h flag to see them:
 
 * directory where to look for IFD files
 
-* -k: disables removing of files which where rendered without errors
+* -k: do not remove an IFD after successful render
 
-* -m: add Mantra command-line option after this flag
+* -m: send additional options to mantra; see mantra -h
+
+Example:
+
+.. code-block:: sh
+
+   tinyfarm.bash /path/to/cool/project -m -V 1a
+
+starts rendering in `/path/to/cool/project` with level 1 rendering statistics and verbose Alfred-style progress reporting.
+
+The directory you specified is not the only place where script is looking for IFDs, but in the **SUBPATH** too.
+I usually save IFDs to `$HIP/render/ifds`.
+Redefine the **SUBPATH** variable if you use other directory for IFDs.
 
 The script itself:
 

@@ -33,7 +33,7 @@
 <meta property="og:url" content="https://groundflyer.github.io/ru/drafts/tinyfarm-en.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2016-12-03 00:00:00+05:00"/>
-<meta property="article:modified_time" content="2016-12-04 00:00:00+05:00"/>
+<meta property="article:modified_time" content="2016-12-09 00:00:00+05:00"/>
 <meta property="article:author" content="https://groundflyer.github.io/ru/author/roman-saldygashev.html">
 <meta property="article:section" content="Houdini"/>
 <meta property="article:tag" content="mantra"/>
@@ -102,9 +102,16 @@ elapsed and estimated&nbsp;time.</p>
 <p>There are just a few optional parameters, run script with -h flag to see&nbsp;them:</p>
 <ul class="simple">
 <li>directory where to look for <span class="caps">IFD</span>&nbsp;files</li>
-<li>-k: disables removing of files which where rendered without&nbsp;errors</li>
-<li>-m: add Mantra command-line option after this&nbsp;flag</li>
+<li>-k: do not remove an <span class="caps">IFD</span> after successful&nbsp;render</li>
+<li>-m: send additional options to mantra; see mantra&nbsp;-h</li>
 </ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span>tinyfarm.bash /path/to/cool/project -m -V 1a
+</pre></div>
+<p>starts rendering in <cite>/path/to/cool/project</cite> with level 1 rendering statistics and verbose Alfred-style progress&nbsp;reporting.</p>
+<p>The directory you specified is not the only place where script is looking for IFDs, but in the <strong><span class="caps">SUBPATH</span></strong> too.
+I usually save IFDs to <cite>$<span class="caps">HIP</span>/render/ifds</cite>.
+Redefine the <strong><span class="caps">SUBPATH</span></strong> variable if you use other directory for&nbsp;IFDs.</p>
 <p>The script&nbsp;itself:</p>
 <p>[gist:id=35809025716bd91d37f9b431056db7c8]</p>
 
