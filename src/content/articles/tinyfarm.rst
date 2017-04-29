@@ -15,16 +15,7 @@ Tinyfarm
    In such cases it's better to generate IFD's and render them separately, when Houdini is closed and RAM is mostly free.
 
    I written this shell script to render multiple IFD files in convenient way.
-
-   .. image:: images/tinyfarm.jpg
-      :width: 800px
-      :height: 450px
-      :align: center
-
-.. image:: images/tinyfarm.jpg
-   :width: 800px
-   :height: 450px
-   :align: center
+:cover: images/tinyfarm.jpg
 
 Just run this script in the directory containing IFD's to render them all.
 

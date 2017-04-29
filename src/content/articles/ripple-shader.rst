@@ -11,16 +11,7 @@ Point-based ripple shader
 :status: published
 :summary:
    This simple shader makes ripples from rain drops.
-
-   .. image:: images/pb-ripple.jpg
-      :width: 800px
-      :height: 450px
-      :align: center
-
-.. image:: images/pb-ripple.jpg
-   :width: 800px
-   :height: 450px
-   :align: center
+:cover: images/pb-ripple.jpg
 
 Generating drops point-cloud
 ============================

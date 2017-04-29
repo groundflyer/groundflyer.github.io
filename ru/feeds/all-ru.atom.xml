@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="https://groundflyer.github.io/ru/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all-ru.atom.xml" rel="self"></link><id>https://groundflyer.github.io/ru/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Домашняя страница Салдыгашева Романа</title><link href="/ru/" rel="alternate"></link><link href="/feeds/all-ru.atom.xml" rel="self"></link><id>/ru/</id><updated>2016-10-23T00:00:00+05:00</updated><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="/ru/point-based-gi.html" rel="alternate"></link><published>2016-10-22T00:00:00+05:00</published><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:None,2016-10-22:/ru/point-based-gi.html</id><summary type="html">&lt;p class="first last"&gt;Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его&amp;nbsp;принципы.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;.
 Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&amp;nbsp;освещенности.&lt;/p&gt;
 &lt;div class="section" id="id2"&gt;
 &lt;h2&gt;Шейдер&amp;nbsp;лайта&lt;/h2&gt;
@@ -215,11 +215,9 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
     }
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%&amp;#64;#$&amp;#64;#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
@@ -265,4 +263,4 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
 Point-based global illumination for movie production.
 &lt;em&gt;ACM Trans. Graph.&lt;/em&gt;, 7 2010.
 URL: &lt;a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForMovieProduction/"&gt;http://graphics.pixar.com/library/PointBasedGlobalIlluminationForMovieProduction/&lt;/a&gt;. &lt;a class="cite-backref" href="#ref-Christensen10-1" title="Jump back to reference 1"&gt;↩&lt;/a&gt;&lt;/p&gt;
-</summary><category term="mantra"></category><category term="vex"></category></entry></feed>
+</content><category term="mantra"></category><category term="vex"></category></entry></feed>

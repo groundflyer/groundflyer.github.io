@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="https://groundflyer.github.io/en/" rel="alternate"></link><link href="https://groundflyer.github.io/feeds/all.atom.xml" rel="self"></link><id>https://groundflyer.github.io/en/</id><updated>2016-12-09T00:00:00+05:00</updated><entry><title>Tinyfarm</title><link href="https://groundflyer.github.io/en/tinyfarm.html" rel="alternate"></link><updated>2016-12-09T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-12-03:en/tinyfarm.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/tinyfarm.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;p&gt;Just run this script in the directory containing &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;#8217;s to render them&amp;nbsp;all.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roman Saldygashev's homepage</title><link href="/en/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/en/</id><updated>2016-12-09T00:00:00+05:00</updated><entry><title>Tinyfarm</title><link href="/en/tinyfarm.html" rel="alternate"></link><published>2016-12-03T00:00:00+05:00</published><updated>2016-12-09T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:None,2016-12-03:/en/tinyfarm.html</id><summary type="html">&lt;p class="first"&gt;Sometimes Houdini consumes too much &lt;span class="caps"&gt;RAM&lt;/span&gt; when sending a scene to render
+so Mantra goes to swap and slows down&amp;nbsp;badly.&lt;/p&gt;
+&lt;p&gt;In such cases it&amp;#8217;s better to generate &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;#8217;s and render them separately, when Houdini is closed and &lt;span class="caps"&gt;RAM&lt;/span&gt; is mostly&amp;nbsp;free.&lt;/p&gt;
+&lt;p class="last"&gt;I written this shell script to render multiple &lt;span class="caps"&gt;IFD&lt;/span&gt; files in convenient&amp;nbsp;way.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Just run this script in the directory containing &lt;span class="caps"&gt;IFD&lt;/span&gt;&amp;#8217;s to render them&amp;nbsp;all.&lt;/p&gt;
 &lt;p&gt;To stop rendering simply Ctrl-C the process,
 it will wait for the current render job to finish,
 then it cleans up the &lt;span class="caps"&gt;IFD&lt;/span&gt; and exits.
@@ -228,8 +231,8 @@ done
 exit $EXC&lt;/code&gt;&lt;/pre&gt;
     &lt;/noscript&gt;
 &lt;/div&gt;
-</summary><category term="mantra"></category><category term="linux"></category><category term="bash"></category></entry><entry><title>Point-based ripple shader</title><link href="https://groundflyer.github.io/en/point-based-ripple.html" rel="alternate"></link><updated>2016-12-01T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-24:en/point-based-ripple.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pb-ripple.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;div class="section" id="generating-drops-point-cloud"&gt;
+</content><category term="mantra"></category><category term="linux"></category><category term="bash"></category></entry><entry><title>Point-based ripple shader</title><link href="/en/point-based-ripple.html" rel="alternate"></link><published>2016-10-24T00:00:00+05:00</published><updated>2016-12-01T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:None,2016-10-24:/en/point-based-ripple.html</id><summary type="html">&lt;p class="first last"&gt;This simple shader makes ripples from rain&amp;nbsp;drops.&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="generating-drops-point-cloud"&gt;
 &lt;h2&gt;Generating drops&amp;nbsp;point-cloud&lt;/h2&gt;
 &lt;p&gt;Exemplary &lt;span class="caps"&gt;POP&lt;/span&gt;&amp;nbsp;setup:&lt;/p&gt;
 &lt;img alt="" class="align-center" src="images/pb-ripple-dop.png" /&gt;
@@ -324,11 +327,9 @@ it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp
     }
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
@@ -368,8 +369,9 @@ it&amp;#8217;s possible to compute accurate arbitrary attenuation using&amp;nbsp
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary><category term="mantra"></category><category term="vex"></category></entry><entry><title>Point-based GI in Mantra</title><link href="https://groundflyer.github.io/en/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-23:en/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;p&gt;This technique seems very similar to the former Renderman &lt;span class="caps"&gt;GI&lt;/span&gt; pipeline &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;, but here we use point clouds only for irradiance&amp;nbsp;caching.&lt;/p&gt;
+&lt;/script&gt;</content><category term="mantra"></category><category term="vex"></category></entry><entry><title>Point-based GI in Mantra</title><link href="/en/point-based-gi.html" rel="alternate"></link><published>2016-10-23T00:00:00+05:00</published><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:None,2016-10-23:/en/point-based-gi.html</id><summary type="html">&lt;p class="first last"&gt;This light shader I wrote few years ago just for fun, but it turned out a very useful thing.
+I&amp;#8217;ll briefly explain this shader in the&amp;nbsp;article.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;This technique seems very similar to the former Renderman &lt;span class="caps"&gt;GI&lt;/span&gt; pipeline &lt;a href='#Christensen10' id='ref-Christensen10-1'&gt;Christensen (2010)&lt;/a&gt;, but here we use point clouds only for irradiance&amp;nbsp;caching.&lt;/p&gt;
 &lt;div class="section" id="light-shader"&gt;
 &lt;h2&gt;Light&amp;nbsp;shader&lt;/h2&gt;
 &lt;p&gt;The shader is based on two&amp;nbsp;passes:&lt;/p&gt;
@@ -580,11 +582,9 @@ This light however will always produce flicker&amp;nbsp;artifacts.&lt;/p&gt;
     }
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%&amp;#64;#$&amp;#64;#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
@@ -630,8 +630,8 @@ This light however will always produce flicker&amp;nbsp;artifacts.&lt;/p&gt;
 Point-based global illumination for movie production.
 &lt;em&gt;ACM Trans. Graph.&lt;/em&gt;, 7 2010.
 URL: &lt;a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForMovieProduction/"&gt;http://graphics.pixar.com/library/PointBasedGlobalIlluminationForMovieProduction/&lt;/a&gt;. &lt;a class="cite-backref" href="#ref-Christensen10-1" title="Jump back to reference 1"&gt;↩&lt;/a&gt;&lt;/p&gt;
-</summary><category term="mantra"></category><category term="vex"></category></entry><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="https://groundflyer.github.io/en/../ru/point-based-gi.html" rel="alternate"></link><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:groundflyer.github.io,2016-10-22:en/../ru/point-based-gi.html</id><summary type="html">&lt;img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" /&gt;
-&lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения [&amp;#64;Christensen10].
+</content><category term="mantra"></category><category term="vex"></category></entry><entry><title>Глобалка на пойнт клаудах в Мантре</title><link href="/en/../ru/point-based-gi.html" rel="alternate"></link><published>2016-10-22T00:00:00+05:00</published><updated>2016-10-23T00:00:00+05:00</updated><author><name>Roman Saldygashev</name></author><id>tag:None,2016-10-22:/en/../ru/point-based-gi.html</id><summary type="html">&lt;p class="first last"&gt;Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его&amp;nbsp;принципы.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения [&amp;#64;Christensen10].
 Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&amp;nbsp;освещенности.&lt;/p&gt;
 &lt;div class="section" id="id2"&gt;
 &lt;h2&gt;Шейдер&amp;nbsp;лайта&lt;/h2&gt;
@@ -723,4 +723,4 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
 &lt;li&gt;одна точка - одно значение, с двухсторонними материалами будет&amp;nbsp;отсос&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-</summary><category term="mantra"></category><category term="vex"></category></entry></feed>
+</content><category term="mantra"></category><category term="vex"></category></entry></feed>

@@ -12,16 +12,7 @@ Point-based GI in Mantra
 :summary:
    This light shader I wrote few years ago just for fun, but it turned out a very useful thing.
    I'll briefly explain this shader in the article.
-
-   .. image:: images/pbgi.jpg
-      :width: 800px
-      :height: 450px
-      :align: center
-
-.. image:: images/pbgi.jpg
-      :width: 800px
-      :height: 450px
-      :align: center
+:cover: images/pbgi.jpg
 
 This technique seems very similar to the former Renderman GI pipeline [@Christensen10], but here we use point clouds only for irradiance caching.
 

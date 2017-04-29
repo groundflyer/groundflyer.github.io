@@ -4,13 +4,13 @@
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/stylesheet/style.min.css">
+    <link rel="stylesheet" type="text/css" href="/ru/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/pygments/default.min.css">
-  <link rel="stylesheet" type="text/css" href="https://groundflyer.github.io/ru/theme/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/ru/theme/pygments/default.min.css">
+  <link rel="stylesheet" type="text/css" href="/ru/theme/font-awesome/css/font-awesome.min.css">
 
 
-    <link href="https://groundflyer.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Домашняя страница Салдыгашева Романа Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Домашняя страница Салдыгашева Романа Atom">
 
 
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
@@ -29,32 +29,33 @@
 <meta property="og:site_name" content="Домашняя страница Салдыгашева Романа"/>
 <meta property="og:title" content="Глобалка на пойнт клаудах в Мантре"/>
 <meta property="og:description" content="Этот лайт шейдер я написал когда-то ради эксперимента, но он оказался довольно неплох. В этой статье я кратко опишу его принципы."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://groundflyer.github.io/ru/point-based-gi.html"/>
+<meta property="og:locale" content="ru_RU"/>
+<meta property="og:url" content="/ru/point-based-gi.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2016-10-22 00:00:00+05:00"/>
 <meta property="article:modified_time" content="2016-10-23 00:00:00+05:00"/>
-<meta property="article:author" content="https://groundflyer.github.io/ru/author/roman-saldygashev.html">
+<meta property="article:author" content="/ru/author/roman-saldygashev.html">
 <meta property="article:section" content="Houdini"/>
 <meta property="article:tag" content="mantra"/>
 <meta property="article:tag" content="vex"/>
-<meta property="og:image" content="/images/photo.jpg">
+<meta property="og:image" content="/ru/images/pbgi.jpg">
 
   <title>Домашняя страница Салдыгашева Романа &ndash; Глобалка на пойнт клаудах в Мантре</title>
+
 </head>
 <body>
   <aside>
     <div>
-      <a href="https://groundflyer.github.io/ru">
+      <a href="/ru">
         <img src="/images/photo.jpg" alt="Роман Салдыгашев" title="Роман Салдыгашев">
       </a>
-      <h1><a href="https://groundflyer.github.io/ru">Роман Салдыгашев</a></h1>
+      <h1><a href="/ru">Роман Салдыгашев</a></h1>
 
 <p>Добываю графоний</p>
       <nav>
         <ul class="list">
-          <li><a href="https://groundflyer.github.io/ru/pages/demoreel.html#demoreel">Demoreel</a></li>
-          <li><a href="https://groundflyer.github.io/ru/pages/about.html#about">Обо&nbsp;мне</a></li>
+          <li><a href="/ru/pages/demoreel.html#demoreel">Demoreel</a></li>
+          <li><a href="/ru/pages/about.html#about">Обо&nbsp;мне</a></li>
 
           <li><a href="https://github.com/groundflyer/physhader-for-mantra" target="_blank">PhyShader for Mantra</a></li>
         </ul>
@@ -68,14 +69,19 @@
         <li><a class="sc-rss" href="feeds/all-ru.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
       </ul>
     </div>
+
+
   </aside>
   <main>
+
     <nav>
-      <a href="https://groundflyer.github.io/ru">Главная</a>
+      <a href="/ru">    Home
+</a>
 
       <a href="/en">English</a>
 
-      <a href="https://groundflyer.github.io/feeds/all.atom.xml">Атом</a>
+      <a href="/feeds/all.atom.xml">    Atom
+</a>
 
     </nav>
 
@@ -83,13 +89,15 @@
   <header>
     <h1 id="point-based-gi">Глобалка на пойнт клаудах в&nbsp;Мантре</h1>
     <p>
-      Опубликовано 22 Октябрь 2016 в <a href="https://groundflyer.github.io/ru/category/houdini.html">Houdini</a>
+          Posted on 22 Октябрь 2016 in <a href="/ru/category/houdini.html">Houdini</a>
+
 
     </p>
   </header>
+
+
   <div>
-    <img alt="" class="align-center" src="images/pbgi.jpg" style="width: 800px; height: 450px;" />
-<p>Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения <a href='#Christensen10' id='ref-Christensen10-1'>Christensen (2010)</a>.
+    <p>Метод, который я опишу здесь, на первый взгляд очень похож на старый устаревший рендермановский метод просчета глобального освещения <a href='#Christensen10' id='ref-Christensen10-1'>Christensen (2010)</a>.
 Однако, это лишь внешнее сходство - Renderman использует облака точек не только для хранения кэша, но и непосредственно для просчета&nbsp;освещенности.</p>
 <div class="section" id="id2">
 <h2>Шейдер&nbsp;лайта</h2>
@@ -304,11 +312,9 @@ C = \frac{\sum_{i=0}^N C_i}{\sum_{i=0}^N \left(\frac{\cos \theta_i}{r_i}\right)^
     }
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%&#64;#$&#64;#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
@@ -358,10 +364,11 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="https://groundflyer.github.io/ru/tag/mantra.html">mantra</a>
-      <a href="https://groundflyer.github.io/ru/tag/vex.html">vex</a>
+      <a href="/ru/tag/mantra.html">mantra</a>
+      <a href="/ru/tag/vex.html">vex</a>
     </p>
   </div>
+
 
 
 
@@ -375,15 +382,17 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
     })();
 </script>
 <noscript>
-    Пожалуйста включите JavaScript, чтобы просмотреть комментарии.
+        Please enable JavaScript to view comments.
+
 </noscript>
 </article>
 
     <footer>
 <p>
-  &copy; Roman Saldygashev 2016 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; Roman Saldygashev 2017 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
-<p>Создано с помощью <a href="http://getpelican.com" target="_blank">Pelican</a> - оформление <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> от <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p><p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
      target="_blank">
@@ -406,7 +415,7 @@ URL: <a href="http://graphics.pixar.com/library/PointBasedGlobalIlluminationForM
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Домашняя страница Салдыгашева Романа ",
-  "url" : "https://groundflyer.github.io/ru",
+  "url" : "/ru",
   "image": "/images/photo.jpg",
   "description": "CG R&D blog"
 }
