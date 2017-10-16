@@ -8,7 +8,7 @@ Point-based ripple shader
 :tags: mantra, vex
 :slug: point-based-ripple
 :lang: en
-:status: published
+:status: draft
 :summary:
    This simple shader makes ripples from rain drops.
 :cover: images/pb-ripple.jpg

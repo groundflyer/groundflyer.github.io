@@ -8,6 +8,7 @@ Tinyfarm
 :tags: mantra, linux, bash
 :slug: tinyfarm
 :lang: en
+:status: draft
 :summary:
    Sometimes Houdini consumes too much RAM when sending a scene to render
    so Mantra goes to swap and slows down badly.

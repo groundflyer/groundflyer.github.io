@@ -8,7 +8,7 @@ Point-based GI in Mantra
 :tags: mantra, vex
 :slug: point-based-gi
 :lang: en
-:status: published
+:status: draft
 :summary:
    This light shader I wrote few years ago just for fun, but it turned out a very useful thing.
    I'll briefly explain this shader in the article.

@@ -34,7 +34,7 @@ LINKS = (('PhyShader for Mantra', 'https://github.com/groundflyer/physhader-for-
 SOCIAL = [('vimeo', 'https://vimeo.com/user2461269'),
           ('github', 'https://github.com/groundflyer'),
           ('envelope', 'mailto:sldg.roman@gmail.com'),
-          ('facebook', 'https://www.facebook.com/profile.php?id=100008549179428'),
+          # ('facebook', 'https://www.facebook.com/profile.php?id=100008549179428'),
           # ('vk', 'https://vk.com/id17026354'),
           ('rss', '/feeds/all.atom.xml')]
 
@@ -57,8 +57,8 @@ THEME = "../../pelican-themes/Flex"
 
 # Flex config
 SITETITLE = "Roman Saldygashev"
-SITESUBTITLE = "Graphonium miner"
-SITELOGO = '/images/photo.jpg'
+SITESUBTITLE = ""
+# SITELOGO = '/images/photo.jpg'
 SITEDESCRIPTION = "CG R&D blog"
 # BROWSER_COLOR = '#4285f4'
 COPYRIGHT_YEAR = date.today().year
