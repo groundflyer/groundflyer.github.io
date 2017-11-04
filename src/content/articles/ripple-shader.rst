@@ -16,7 +16,7 @@ Point-based ripple shader
 Generating drops point-cloud
 ============================
 
-Exemplary POP setup:
+An exemplary POP setup:
 
 .. image:: images/pb-ripple-dop.png
    :align: center
